@@ -1,0 +1,26 @@
+{
+  "theme_name": "The Command Cockpit - Bus Edition",
+  "colors": {
+    "background": "#131313",
+    "surface": "#1f1f1f",
+    "primary": "#b8c3ff",
+    "am_check": "#FF5252",
+    "pm_check": "#4CAF50",
+    "on_surface": "#e2e2e2",
+    "on_surface_variant": "#c4c5d9"
+  },
+  "typography": {
+    "headline": "Lexend, sans-serif",
+    "body": "Work Sans, sans-serif"
+  },
+  "components": {
+    "button": {
+      "roundness": "1.5rem",
+      "height": "64px"
+    },
+    "card": {
+      "roundness": "0.5rem",
+      "blur": "12px"
+    }
+  }
+}

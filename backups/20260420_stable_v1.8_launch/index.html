@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>버스기사다~얍 솔루션</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#001f27",
+                    "on-surface-variant": "#424654",
+                    "surface-container-low": "#f3f4f5",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e7e8e9",
+                    "inverse-surface": "#2e3132",
+                    "surface-container-highest": "#e1e3e4",
+                    "on-secondary-fixed-variant": "#004e5f",
+                    "tertiary-fixed": "#79f6ed",
+                    "primary": "#0040a1",
+                    "secondary": "#00677d",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#0056d2",
+                    "on-tertiary-container": "#6eece3",
+                    "on-background": "#191c1d",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed-variant": "#0040a1",
+                    "on-surface": "#191c1d",
+                    "surface-container": "#edeeef",
+                    "secondary-container": "#50d9fe",
+                    "secondary-fixed-dim": "#4cd6fb",
+                    "on-error": "#ffffff",
+                    "surface": "#f8f9fa",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#59dad1",
+                    "outline-variant": "#c3c6d6",
+                    "surface-dim": "#d9dadb",
+                    "primary-fixed": "#dae2ff",
+                    "outline": "#737785",
+                    "on-secondary-container": "#005c70",
+                    "primary-fixed-dim": "#b2c5ff",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed": "#b3ebff",
+                    "primary-container": "#0056d2",
+                    "on-tertiary-fixed": "#00201e",
+                    "tertiary": "#00504c",
+                    "surface-variant": "#e1e3e4",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#006a65",
+                    "background": "#f8f9fa",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-container": "#ccd8ff",
+                    "inverse-on-surface": "#f0f1f2",
+                    "inverse-primary": "#b2c5ff",
+                    "on-tertiary-fixed-variant": "#00504c",
+                    "surface-bright": "#f8f9fa",
+                    "on-primary-fixed": "#001847"
+            },
+            "fontFamily": {
+                    "headline": ["Lexend"],
+                    "body": ["Lexend"],
+                    "label": ["Lexend"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Lexend', sans-serif; }
+        body { min-height: max(884px, 100dvh); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .nav-item.active { opacity: 1; background-color: rgba(218, 226, 255, 0.5); border-radius: 1rem; padding: 0.5rem 1rem; color: var(--primary); }
+        /* Modal standard styling */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: flex; align-items: center; justify-content: center; }
+        .modal-overlay.hidden { display: none; }
+</style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen pb-32 w-full max-w-md mx-auto relative overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-surface-container-high px-4 py-6 shadow-sm max-w-md mx-auto">
+    <div class="flex items-center justify-between w-full">
+        <button class="p-2 text-outline-variant active:scale-95 transition-transform">
+            <span class="material-symbols-outlined text-2xl">menu</span>
+        </button>
+        <div class="flex flex-col items-center">
+            <h1 class="text-2xl font-black text-primary tracking-tighter italic">버스기사다<span class="text-secondary not-italic">~</span>얍</h1>
+            <span class="text-[9px] font-black text-outline uppercase tracking-[0.4em] -mt-1 opacity-40">DRIVER COCKPIT</span>
+        </div>
+        <button class="p-2 text-primary active:scale-95 transition-transform">
+            <span class="material-symbols-outlined text-2xl" id="btn-sync">sync</span>
+        </button>
+    </div>
+</header>
+
+<main class="pt-28 px-4 space-y-6 w-full flex flex-col">
+    <!-- CALENDAR TAB -->
+    <section id="tab-calendar" class="tab-content active space-y-6">
+        <!-- Month Selector Section -->
+        <div class="flex items-center justify-between px-2">
+            <div class="flex items-center gap-2">
+                <h2 class="text-3xl font-bold tracking-tight text-on-surface" id="display-year-month">2024년 5월</h2>
+            </div>
+            <div class="flex gap-4">
+                <button id="prev-month" class="p-2 rounded-xl bg-surface-container-low hover:bg-slate-100 transition-colors">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <button id="next-month" class="p-2 rounded-xl bg-surface-container-low hover:bg-slate-100 transition-colors">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Calendar Legend -->
+        <div class="flex gap-4 px-2">
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-error"></div>
+                <span class="text-sm font-semibold text-on-surface-variant">오전 근무 (AM)</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-tertiary-container"></div>
+                <span class="text-sm font-semibold text-on-surface-variant">오후 근무 (PM)</span>
+            </div>
+        </div>
+        
+        <!-- Monthly Grid - Expanded for better readability -->
+        <div class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_12px_40px_rgba(25,28,29,0.06)] flex-grow">
+            <div class="grid grid-cols-7 gap-y-6" id="calendar-grid">
+                <!-- Data will be populated via app.js -->
+            </div>
+        </div>
+        
+        <!-- Shift Check Buttons -->
+        <div class="space-y-4 pb-8">
+            <div class="grid grid-cols-1 gap-3">
+                <button id="btn-am" class="w-full h-16 text-on-primary rounded-xl font-bold text-lg flex items-center justify-center gap-3 active:scale-[0.98] transition-transform shadow-md bg-error">
+                    <span class="material-symbols-outlined text-2xl">wb_sunny</span> 오전 근무 체크 (총 <span id="count-am">0</span>일)
+                </button>
+                <button id="btn-pm" class="w-full h-16 bg-tertiary-container text-on-tertiary-container rounded-xl font-bold text-lg flex items-center justify-center gap-3 active:scale-[0.98] transition-transform shadow-md">
+                    <span class="material-symbols-outlined text-2xl">dark_mode</span> 오후 근무 체크(총 <span id="count-pm">0</span>일)
+                </button>
+                <button id="btn-all" class="w-full h-16 bg-primary text-on-primary rounded-xl font-bold text-lg flex items-center justify-center gap-3 active:scale-[0.98] transition-transform shadow-md">
+                    <span class="material-symbols-outlined text-2xl">event_available</span> 전일 근무
+                </button>
+            </div>
+            <div class="flex flex-col gap-3">
+                <button id="btn-manual" class="w-full h-12 bg-secondary text-on-secondary rounded-xl font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-transform shadow-sm">
+                    <span class="material-symbols-outlined text-xl">info</span> 운전자 매뉴얼
+                </button>
+                <button id="btn-chatbot" class="w-full h-12 bg-[#2D2D2D] text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-transform shadow-sm ring-1 ring-white/10 relative overflow-hidden">
+                    <span class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-50"></span>
+                    <span class="material-symbols-outlined text-xl text-blue-400 z-10">smart_toy</span>
+                    <span class="z-10 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">실무 비서 AI</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ANALYSIS VIEW (Replaces Dashboard) -->
+    <section id="tab-dashboard" class="tab-content space-y-6">
+        <div class="px-2 flex justify-between items-start">
+            <div>
+                <h2 class="text-2xl font-bold tracking-tight text-on-surface">범용 근무분석 AI</h2>
+                <p class="text-xs text-outline-variant mt-1">모든 노선의 밴드 배차표를 유연하게 분석하고 동기화합니다.</p>
+            </div>
+            <button id="btn-band-config" class="p-2 text-outline-variant hover:text-primary transition-colors bg-surface-container-low rounded-xl shadow-sm active:scale-95">
+                <span class="material-symbols-outlined text-xl">settings</span>
+            </button>
+        </div>
+        
+        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-outline-variant/30 space-y-4">
+            <button id="btn-auto-fetch" class="w-full h-12 bg-[#00C73C] text-white rounded-xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform shadow-md">
+                <span class="material-symbols-outlined font-variation-settings-[F1]">move_to_inbox</span> 밴드 자동 수집 (Auto Update)
+            </button>
+            
+            <div class="relative">
+                <textarea id="analysis-input" class="w-full h-48 bg-surface-container-low rounded-xl p-4 text-sm outline-none focus:ring-2 focus:ring-primary border border-outline-variant/20 resize-none font-mono" placeholder="[배차표] 텍스트를 이곳에 붙여넣으세요..."></textarea>
+            </div>
+            
+            <button id="btn-run-analysis" class="w-full h-14 bg-primary text-white rounded-xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform shadow-lg shadow-primary/20">
+                <span class="material-symbols-outlined">psychology</span> AI 배차 분석 시작
+            </button>
+        </div>
+
+        <div id="analysis-results" class="space-y-4 hidden pb-12">
+            <h3 class="text-lg font-bold px-2 flex items-center gap-2 text-primary font-headline">
+                <span class="material-symbols-outlined">table_view</span> 분석 결과 리포트
+            </h3>
+            <div class="overflow-x-auto bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-sm">
+                <table class="w-full text-xs text-left">
+                    <thead class="bg-surface-container-high text-on-surface-variant">
+                        <tr>
+                            <th class="px-4 py-3 font-bold">기사명</th>
+                            <th class="px-4 py-3 font-bold">근무</th>
+                            <th class="px-4 py-3 font-bold">차량</th>
+                            <th class="px-4 py-3 font-bold">상태/오류</th>
+                        </tr>
+                    </thead>
+                    <tbody id="analysis-table-body">
+                        <!-- Data injected via JS -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="px-2 text-[10px] text-outline-variant italic">
+                * 나의 근무는 분석 즉시 '근무현황(캘린더)'에 자동 반영됩니다.
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM INFO TAB -->
+    <section id="tab-team" class="tab-content space-y-6">
+        <h2 class="text-2xl font-bold tracking-tight text-on-surface px-2">팀원 종합 대시보드</h2>
+        <div id="team-list" class="grid grid-cols-1 gap-4">
+            <!-- Injected via JS -->
+        </div>
+    </section>
+
+
+
+    <!-- CHECKLIST / FETCH TAB -->
+    <section id="tab-fetch" class="tab-content space-y-6">
+        <h2 class="text-2xl font-bold tracking-tight px-2">운행 점검 / 근무현황분석</h2>
+        
+        <div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm space-y-4">
+            <h3 class="font-bold flex items-center gap-2"><span class="material-symbols-outlined text-primary">fact_check</span> 안전 점검</h3>
+            <label class="flex items-center gap-3 p-3 bg-surface rounded-lg cursor-pointer hover:bg-surface-container-high transition">
+                <input type="checkbox" class="w-5 h-5 rounded text-primary focus:ring-primary border-outline-variant safety-check">
+                <span class="font-medium">타이어 공기압 및 상태 확인</span>
+            </label>
+            <label class="flex items-center gap-3 p-3 bg-surface rounded-lg cursor-pointer hover:bg-surface-container-high transition">
+                <input type="checkbox" class="w-5 h-5 rounded text-primary focus:ring-primary border-outline-variant safety-check">
+                <span class="font-medium">엔진오일, 냉각수 적정량 확인</span>
+            </label>
+            <label class="flex items-center gap-3 p-3 bg-surface rounded-lg cursor-pointer hover:bg-surface-container-high transition">
+                <input type="checkbox" class="w-5 h-5 rounded text-primary focus:ring-primary border-outline-variant safety-check">
+                <span class="font-medium">브레이크 작동 상태 및 등화장치</span>
+            </label>
+            <button id="btn-safety-complete" class="w-full py-3 mt-2 bg-slate-200 text-slate-500 font-bold rounded-lg transition-all" disabled>점검 완료</button>
+        </div>
+
+        <div class="h-[1px] bg-surface-container-high my-6"></div>
+
+        <div class="h-[1px] bg-surface-container-high my-6"></div>
+
+        <!-- [개편] 실시간 근무현황 관제 대시보드 (Direct Embedding) -->
+        <div id="operational-insight" class="space-y-4">
+            <h3 class="text-xl font-bold text-on-surface px-1 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">analytics</span> 실시간 근무현황 관제
+            </h3>
+            
+            <!-- 리포트 자동 매립 영역 -->
+            <div id="local-ceo-report-display" class="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-sm overflow-hidden min-h-[120px] flex items-center justify-center p-4">
+                <div class="text-center space-y-2">
+                    <div class="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto"></div>
+                    <p class="text-[10px] text-outline-variant">데이터를 분석하고 있습니다...</p>
+                </div>
+            </div>
+
+            <!-- 분석 트리거 (필요 시 수동 갱신) -->
+            <button id="btn-ceo-report-op" class="w-full h-12 bg-surface text-primary border border-primary/20 rounded-xl font-bold text-xs active:scale-95 transition-all flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-sm">refresh</span> 분석 리포트 수동 갱신
+            </button>
+        </div>
+    </section>
+
+</main>
+
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-center z-50">
+    <div class="w-full max-w-md flex justify-around items-center px-4 pb-8 pt-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl border-t border-surface-container shadow-[0_-12px_40px_rgba(25,28,29,0.06)]">
+        <button class="nav-item flex flex-col items-center justify-center text-slate-500 py-2 opacity-70 transition-all px-2" data-tab="dashboard">
+            <span class="material-symbols-outlined mb-1">analytics</span>
+            <span class="text-xs font-semibold">근무분석</span>
+        </button>
+        <button class="nav-item active flex flex-col items-center justify-center text-slate-500 py-3 transition-all px-3" data-tab="calendar">
+            <span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+            <span class="text-xs font-bold">근무현황</span>
+        </button>
+        <button class="nav-item flex flex-col items-center justify-center text-slate-500 py-2 opacity-70 transition-all px-2" data-tab="team">
+            <span class="material-symbols-outlined mb-1">group</span>
+            <span class="text-xs font-semibold">팀원정보</span>
+        </button>
+        <button class="nav-item flex flex-col items-center justify-center text-slate-500 px-3 py-2 opacity-70 transition-all px-2" data-tab="fetch">
+            <span class="material-symbols-outlined mb-1">fact_check</span>
+            <span class="text-xs font-semibold">운행/배차</span>
+        </button>
+    </div>
+</nav>
+
+<!-- Modal -->
+<div id="modal-overlay" class="modal-overlay hidden">
+    <div class="bg-surface-container-lowest p-6 rounded-2xl shadow-2xl max-w-[80%] text-center flex flex-col items-center gap-4">
+        <div id="modal-spinner" class="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+        <div id="modal-message" class="font-bold text-lg">처리 중...</div>
+        <button id="modal-close" class="mt-2 w-full py-3 bg-primary text-white rounded-xl font-bold hidden">닫기</button>
+    </div>
+</div>
+
+<!-- Manual Modal -->
+<div id="manual-modal" class="modal-overlay hidden">
+    <div class="bg-surface p-6 rounded-t-3xl shadow-2xl w-full max-w-md h-[85vh] absolute bottom-0 flex flex-col gap-4 transform transition-transform duration-300">
+        <div class="w-12 h-1.5 bg-outline-variant rounded-full mx-auto mb-2 opacity-50"></div>
+        <h3 class="font-bold text-xl flex items-center gap-2 text-primary border-b border-surface-container-high pb-4"><span class="material-symbols-outlined">menu_book</span> 안전운행 및 규정 매뉴얼</h3>
+        <div id="manual-content" class="overflow-y-auto flex-1 text-sm space-y-4 text-on-surface whitespace-pre-wrap leading-relaxed pr-2">
+            <!-- Injected via JS -->
+        </div>
+        <button id="manual-close" class="mt-2 w-full py-4 bg-primary text-white rounded-xl font-bold text-lg shadow-md active:scale-95 transition-transform hover:bg-primary-container">확인 완료</button>
+    </div>
+</div>
+
+
+
+<!-- Edit Sheet Modal -->
+<div id="edit-sheet-modal" class="modal-overlay hidden z-[60]">
+    <div class="bg-surface p-6 rounded-t-3xl shadow-2xl w-full max-w-md absolute bottom-0 flex flex-col gap-4 transform transition-transform duration-300 translate-y-full">
+        <div class="w-12 h-1.5 bg-outline-variant rounded-full mx-auto mb-2 opacity-50"></div>
+        <h3 id="edit-sheet-title" class="font-bold text-xl text-center pb-2">근무 변경</h3>
+        <div class="grid grid-cols-2 gap-3">
+            <button class="btn-edit-action h-14 bg-error text-white rounded-xl font-bold flex items-center justify-center gap-2" data-status="AM">
+                <span class="material-symbols-outlined font-variation-settings-[F1]">wb_sunny</span> 오전
+            </button>
+            <button class="btn-edit-action h-14 bg-[#00BFA5] text-white rounded-xl font-bold flex items-center justify-center gap-2" data-status="PM">
+                <span class="material-symbols-outlined font-variation-settings-[F1]">dark_mode</span> 오후
+            </button>
+            <button class="btn-edit-action h-14 bg-primary text-white rounded-xl font-bold flex items-center justify-center gap-2" data-status="ALL">
+                <span class="material-symbols-outlined font-variation-settings-[F1]">event_available</span> 전일
+            </button>
+            <button class="btn-edit-action h-14 bg-surface-container-highest text-error rounded-xl font-bold flex items-center justify-center gap-2" data-status="DELETE">
+                <span class="material-symbols-outlined">delete</span> 삭제
+            </button>
+        </div>
+        <button id="edit-sheet-close" class="mt-2 w-full py-4 bg-outline-variant/20 text-on-surface rounded-xl font-bold">취소</button>
+    </div>
+</div>
+
+
+<!-- Band Auto Config Modal -->
+<div id="band-config-modal" class="modal-overlay hidden z-50">
+    <div class="bg-surface p-6 rounded-t-3xl shadow-2xl w-full max-w-md absolute bottom-0 flex flex-col gap-4 transform transition-transform duration-300 translate-y-full">
+        <div class="w-12 h-1.5 bg-outline-variant rounded-full mx-auto mb-2 opacity-50"></div>
+        <h3 class="font-bold text-xl text-primary flex items-center gap-2"><span class="material-symbols-outlined pb-1">tune</span> 범용 노선 설정</h3>
+        
+        <div class="space-y-4 mt-2">
+            <div>
+                <label class="text-xs font-bold text-on-surface block mb-1">버스 노선명 (옵션)</label>
+                <input type="text" id="config-route-name" placeholder="예: 1311번" class="w-full h-12 bg-surface-container-low rounded-xl px-4 text-sm outline-none focus:ring-2 focus:ring-primary border border-outline-variant/30">
+            </div>
+            <div>
+                <label class="text-xs font-bold text-on-surface block mb-1">네이버 밴드 주소 (필수)</label>
+                <input type="url" id="config-band-url" placeholder="https://band.us/..." class="w-full h-12 bg-surface-container-low rounded-xl px-4 text-sm outline-none focus:ring-2 focus:ring-primary border border-outline-variant/30">
+            </div>
+            <div>
+                <label class="text-xs font-bold text-on-surface block mb-1">배차 검색 키워드 (필수)</label>
+                <input type="text" id="config-band-keyword" placeholder="예: 배차표" class="w-full h-12 bg-surface-container-low rounded-xl px-4 text-sm outline-none focus:ring-2 focus:ring-primary border border-outline-variant/30">
+            </div>
+            <div>
+                <label class="text-xs font-bold text-on-surface block mb-1">특정 작성자명 (옵션)</label>
+                <input type="text" id="config-band-author" placeholder="글쓴이 이름 입력 (예: 홍길동)" class="w-full h-12 bg-surface-container-low rounded-xl px-4 text-sm outline-none focus:ring-2 focus:ring-primary border border-outline-variant/30">
+            </div>
+        </div>
+
+        <div class="flex gap-3 mt-4">
+            <button id="btn-config-close" class="flex-1 py-4 bg-outline-variant/20 text-on-surface rounded-xl font-bold">취소</button>
+            <button id="btn-config-save" class="flex-[2] py-4 bg-primary text-white rounded-xl font-bold shadow-md">저장하기</button>
+        </div>
+    </div>
+</div>
+
+<!-- API Config Modal (Premium) -->
+<div id="api-config-modal" class="modal-overlay hidden z-[60]">
+    <div class="bg-surface p-8 rounded-t-3xl shadow-2xl w-full max-w-md absolute bottom-0 flex flex-col gap-5 transform transition-transform duration-300 translate-y-full">
+        <div class="w-12 h-1.5 bg-outline-variant rounded-full mx-auto mb-2 opacity-50"></div>
+        <div class="flex items-center gap-4 mb-2">
+            <div class="p-3 bg-primary/10 rounded-2xl text-primary">
+                <span class="material-symbols-outlined text-2xl font-bold">key</span>
+            </div>
+            <div>
+                <h3 class="font-bold text-xl text-on-surface">실무 비서 AI 설정</h3>
+                <p class="text-[10px] text-outline-variant mt-0.5">Gemini API 키를 안전하게 등록합니다.</p>
+            </div>
+        </div>
+        
+        <div class="space-y-4">
+            <div class="space-y-1.5">
+                <div class="flex justify-between items-center px-1">
+                    <label class="text-[11px] font-bold text-on-surface opacity-80 uppercase tracking-tighter">API KEY</label>
+                    <span id="api-key-status" class="text-[10px] text-primary font-bold">미설정</span>
+                </div>
+                <div class="relative">
+                    <input type="password" id="input-api-key" placeholder="여기에 키를 붙여넣으세요" class="w-full h-14 bg-surface-container-low rounded-xl px-4 text-sm outline-none focus:ring-2 focus:ring-primary border border-outline-variant/30 font-mono tracking-widest">
+                    <button type="button" onclick="const p=document.getElementById('input-api-key'); p.type=p.type==='password'?'text':'password';" class="absolute right-4 top-4 text-outline-variant">
+                        <span class="material-symbols-outlined text-xl">visibility</span>
+                    </button>
+                </div>
+            </div>
+            <p class="text-[10px] text-outline-variant px-1 leading-relaxed bg-surface-container-lowest p-3 rounded-lg border border-outline-variant/10">
+                <span class="material-symbols-outlined text-[12px] align-middle mr-1">info</span> 
+                키는 브라우저 내부(LocalStorage)에만 저장되며 외부로 전송되지 않습니다.
+            </p>
+        </div>
+
+        <div class="flex flex-col gap-3 mt-4 mb-2">
+            <button id="btn-test-key" onclick="window.chatbot.testApiKey()" class="w-full py-3 bg-surface-container-high text-primary rounded-xl font-bold text-[12px] border border-primary/20 active:scale-95 transition-all flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-sm">vitals</span> 실시간 키 유효성 확인 (테스트)
+            </button>
+            <div class="flex gap-3">
+                <button onclick="window.chatbot.hideConfig()" class="flex-1 py-4 bg-outline-variant/10 text-on-surface rounded-xl font-bold active:scale-95 transition-transform">닫기</button>
+                <button onclick="window.chatbot.saveApiKey()" class="flex-[2] py-4 bg-primary text-white rounded-xl font-bold shadow-lg shadow-primary/20 active:scale-95 transition-transform">설정 저장</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chatbot Modal -->
+<div id="chat-modal" class="modal-overlay hidden z-50">
+    <div class="bg-surface w-full h-[90vh] absolute bottom-0 rounded-t-3xl shadow-2xl flex flex-col transform transition-transform duration-300 translate-y-full">
+        <!-- Header -->
+        <div class="flex justify-between items-center px-4 py-4 border-b border-surface-container-high bg-surface rounded-t-3xl z-10 shadow-sm relative">
+            <h3 class="font-bold text-lg text-primary flex items-center gap-2"><span class="material-symbols-outlined">psychology</span> 실무 비서 AI</h3>
+            <div class="flex gap-2">
+                <button id="btn-api-config" class="p-2 text-outline-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-xl">settings</span></button>
+                <button id="chat-close" class="p-2 text-outline-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-xl">close</span></button>
+            </div>
+        </div>
+        <!-- Chat Log -->
+        <div id="chat-log" class="flex-1 overflow-y-auto p-4 space-y-4 bg-surface flex flex-col">
+            <!-- Messages go here -->
+        </div>
+        
+        <!-- FAQ Quick Suggestions -->
+        <div id="faq-suggestions" class="px-4 py-2 border-t border-surface-container-high bg-surface-container-lowest">
+            <p class="text-[10px] font-bold text-primary mb-2 opacity-70 flex items-center gap-1">
+                <span class="material-symbols-outlined text-[12px]">tips_and_updates</span> 자주 묻는 질문 (클릭 시 즉시 답변)
+            </p>
+            <div id="faq-chips-container" class="flex gap-2 overflow-x-auto pb-2 no-scrollbar scroll-smooth">
+                <!-- Injected via JS from FAQ_DATA -->
+                <div class="animate-pulse flex gap-2">
+                    <div class="h-8 w-24 bg-surface-container-high rounded-full"></div>
+                    <div class="h-8 w-32 bg-surface-container-high rounded-full"></div>
+                    <div class="h-8 w-20 bg-surface-container-high rounded-full"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="p-4 bg-surface border-t border-surface-container-high pb-8">
+            <div class="flex gap-2 relative">
+                <input type="text" id="chat-input" class="flex-1 h-12 bg-surface-container-low rounded-xl px-4 text-sm outline-none focus:ring-2 focus:ring-primary border border-outline-variant/30" placeholder="매뉴얼에 대해 통신하십시오...">
+                <button id="btn-send-chat" class="w-12 h-12 bg-primary text-white rounded-xl shadow-md active:scale-95 flex items-center justify-center">
+                    <span class="material-symbols-outlined">send</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="src/js/manuals_data.js"></script>
+<script src="src/js/faq_data.js"></script>
+<script src="src/js/chatbot.js"></script>
+<script src="src/js/engine_1311.js"></script>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<!-- Firebase 호스팅 환경 전용 자동 설정 (로컬 실행 시 실패 방지) -->
+<script>
+  if (window.location.protocol !== 'file:') {
+    const script = document.createElement('script');
+    script.src = '/__/firebase/init.js';
+    document.head.appendChild(script);
+  } else {
+    console.warn("로컬(file://) 환경입니다. Firebase 자동 설정을 건너뜁니다.");
+  }
+</script>
+
+<script src="src/js/firebase_service.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

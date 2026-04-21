@@ -1,0 +1,642 @@
+{
+  "2026-04-26": {
+    "2501595": {
+      "date": "2026-04-26",
+      "member_id": "2501595",
+      "name": "김용화",
+      "status": "AM",
+      "vehicle": "1325",
+      "is_verified": false,
+      "validation_error": "차량불일치(고정:1023)"
+    },
+    "1500360": {
+      "date": "2026-04-26",
+      "member_id": "1500360",
+      "name": "차신조",
+      "status": "PM",
+      "vehicle": "1325",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1100733": {
+      "date": "2026-04-26",
+      "member_id": "1100733",
+      "name": "박태일",
+      "status": "AM",
+      "vehicle": "3733",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1901295": {
+      "date": "2026-04-26",
+      "member_id": "1901295",
+      "name": "이근배",
+      "status": "PM",
+      "vehicle": "3733",
+      "is_verified": false,
+      "validation_error": "차량불일치(고정:1023)"
+    },
+    "1701037": {
+      "date": "2026-04-26",
+      "member_id": "1701037",
+      "name": "설수길",
+      "status": "PM",
+      "vehicle": "3744",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1200454": {
+      "date": "2026-04-26",
+      "member_id": "1200454",
+      "name": "이기수",
+      "status": "AM",
+      "vehicle": "3744",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1500426": {
+      "date": "2026-04-26",
+      "member_id": "1500426",
+      "name": "최민수",
+      "status": "AM",
+      "vehicle": "3737",
+      "is_verified": false,
+      "validation_error": "차량불일치(고정:3740)"
+    },
+    "1200722": {
+      "date": "2026-04-26",
+      "member_id": "1200722",
+      "name": "황민",
+      "status": "PM",
+      "vehicle": "3737",
+      "is_verified": false,
+      "validation_error": "차량불일치(고정:1063)"
+    },
+    "900754": {
+      "date": "2026-04-26",
+      "member_id": "900754",
+      "name": "신태호",
+      "status": "PM",
+      "vehicle": "3740",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "2100227": {
+      "date": "2026-04-26",
+      "member_id": "2100227",
+      "name": "우병재",
+      "status": "AM",
+      "vehicle": "3740",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1300473": {
+      "date": "2026-04-26",
+      "member_id": "1300473",
+      "name": "김찬기",
+      "status": "PM",
+      "vehicle": "1119",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1901490": {
+      "date": "2026-04-26",
+      "member_id": "1901490",
+      "name": "박노종",
+      "status": "AM",
+      "vehicle": "1119",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "2502102": {
+      "date": "2026-04-26",
+      "member_id": "2502102",
+      "name": "최재선",
+      "status": "AM",
+      "vehicle": "1023",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "NEW_김성진": {
+      "date": "2026-04-26",
+      "member_id": "NEW_김성진",
+      "name": "김성진",
+      "status": "PM",
+      "vehicle": "1023",
+      "is_verified": true,
+      "validation_error": "정상"
+    }
+  },
+  "2026-04-25": {
+    "2502102": {
+      "date": "2026-04-25",
+      "member_id": "2502102",
+      "name": "최재선",
+      "status": "AM",
+      "vehicle": "1023",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "NEW_김성진": {
+      "date": "2026-04-25",
+      "member_id": "NEW_김성진",
+      "name": "김성진",
+      "status": "PM",
+      "vehicle": "1023",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1300473": {
+      "date": "2026-04-25",
+      "member_id": "1300473",
+      "name": "김찬기",
+      "status": "PM",
+      "vehicle": "1119",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1901490": {
+      "date": "2026-04-25",
+      "member_id": "1901490",
+      "name": "박노종",
+      "status": "AM",
+      "vehicle": "1119",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1100695": {
+      "date": "2026-04-25",
+      "member_id": "1100695",
+      "name": "최정운",
+      "status": "AM",
+      "vehicle": "1325",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "NEW_곽노": {
+      "date": "2026-04-25",
+      "member_id": "NEW_곽노",
+      "name": "곽노",
+      "status": "PM",
+      "vehicle": "1325",
+      "is_verified": false,
+      "validation_error": "차량불일치(고정:3740)"
+    },
+    "1100733": {
+      "date": "2026-04-25",
+      "member_id": "1100733",
+      "name": "박태일",
+      "status": "AM",
+      "vehicle": "3733",
+      "is_verified": false,
+      "validation_error": "고정휴무일(토) 근무"
+    },
+    "1901295": {
+      "date": "2026-04-25",
+      "member_id": "1901295",
+      "name": "이근배",
+      "status": "PM",
+      "vehicle": "3733",
+      "is_verified": false,
+      "validation_error": "차량불일치(고정:1023)"
+    },
+    "1500426": {
+      "date": "2026-04-25",
+      "member_id": "1500426",
+      "name": "최민수",
+      "status": "AM",
+      "vehicle": "3740",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1001571": {
+      "date": "2026-04-25",
+      "member_id": "1001571",
+      "name": "이호재",
+      "status": "PM",
+      "vehicle": "3740",
+      "is_verified": false,
+      "validation_error": "차량불일치(고정:3739)"
+    },
+    "1301161": {
+      "date": "2026-04-25",
+      "member_id": "1301161",
+      "name": "박영철",
+      "status": "AM",
+      "vehicle": "3737",
+      "is_verified": false,
+      "validation_error": "차량불일치(고정:3733)"
+    },
+    "700295": {
+      "date": "2026-04-25",
+      "member_id": "700295",
+      "name": "강부구",
+      "status": "PM",
+      "vehicle": "3737",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "2100227": {
+      "date": "2026-04-25",
+      "member_id": "2100227",
+      "name": "우병재",
+      "status": "AM",
+      "vehicle": "3744",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1500360": {
+      "date": "2026-04-25",
+      "member_id": "1500360",
+      "name": "차신조",
+      "status": "PM",
+      "vehicle": "3744",
+      "is_verified": true,
+      "validation_error": "정상"
+    }
+  },
+  "2026-04-24": {
+    "1701037": {
+      "date": "2026-04-24",
+      "member_id": "1701037",
+      "name": "설수길",
+      "status": "PM",
+      "vehicle": "3744",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "2100227": {
+      "date": "2026-04-24",
+      "member_id": "2100227",
+      "name": "우병재",
+      "status": "AM",
+      "vehicle": "3744",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "2501595": {
+      "date": "2026-04-24",
+      "member_id": "2501595",
+      "name": "김용화",
+      "status": "AM",
+      "vehicle": "1023",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "NEW_김성진": {
+      "date": "2026-04-24",
+      "member_id": "NEW_김성진",
+      "name": "김성진",
+      "status": "PM",
+      "vehicle": "1023",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1001571": {
+      "date": "2026-04-24",
+      "member_id": "1001571",
+      "name": "이호재",
+      "status": "PM",
+      "vehicle": "3739",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "600789": {
+      "date": "2026-04-24",
+      "member_id": "600789",
+      "name": "이승옥",
+      "status": "AM",
+      "vehicle": "3739",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "100340": {
+      "date": "2026-04-24",
+      "member_id": "100340",
+      "name": "정정섭",
+      "status": "PM",
+      "vehicle": "1063",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1100695": {
+      "date": "2026-04-24",
+      "member_id": "1100695",
+      "name": "최정운",
+      "status": "AM",
+      "vehicle": "1063",
+      "is_verified": false,
+      "validation_error": "차량불일치(고정:1325)"
+    },
+    "1100733": {
+      "date": "2026-04-24",
+      "member_id": "1100733",
+      "name": "박태일",
+      "status": "AM",
+      "vehicle": "3733",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1901295": {
+      "date": "2026-04-24",
+      "member_id": "1901295",
+      "name": "이근배",
+      "status": "PM",
+      "vehicle": "3733",
+      "is_verified": false,
+      "validation_error": "차량불일치(고정:1023)"
+    },
+    "900754": {
+      "date": "2026-04-24",
+      "member_id": "900754",
+      "name": "신태호",
+      "status": "AM",
+      "vehicle": "3740",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "NEW_곽노": {
+      "date": "2026-04-24",
+      "member_id": "NEW_곽노",
+      "name": "곽노",
+      "status": "PM",
+      "vehicle": "3740",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "700295": {
+      "date": "2026-04-24",
+      "member_id": "700295",
+      "name": "강부구",
+      "status": "PM",
+      "vehicle": "3737",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1901046": {
+      "date": "2026-04-24",
+      "member_id": "1901046",
+      "name": "박재홍",
+      "status": "AM",
+      "vehicle": "3737",
+      "is_verified": true,
+      "validation_error": "정상"
+    }
+  },
+  "2026-04-23": {
+    "2100539": {
+      "date": "2026-04-23",
+      "member_id": "2100539",
+      "name": "김동원",
+      "status": "PM",
+      "vehicle": "1325",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "2502102": {
+      "date": "2026-04-23",
+      "member_id": "2502102",
+      "name": "최재선",
+      "status": "AM",
+      "vehicle": "1325",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1200454": {
+      "date": "2026-04-23",
+      "member_id": "1200454",
+      "name": "이기수",
+      "status": "PM",
+      "vehicle": "3744",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "2100227": {
+      "date": "2026-04-23",
+      "member_id": "2100227",
+      "name": "우병재",
+      "status": "AM",
+      "vehicle": "3744",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "900754": {
+      "date": "2026-04-23",
+      "member_id": "900754",
+      "name": "신태호",
+      "status": "AM",
+      "vehicle": "3740",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "NEW_김성진": {
+      "date": "2026-04-23",
+      "member_id": "NEW_김성진",
+      "name": "김성진",
+      "status": "PM",
+      "vehicle": "3740",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1300473": {
+      "date": "2026-04-23",
+      "member_id": "1300473",
+      "name": "김찬기",
+      "status": "PM",
+      "vehicle": "1119",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1100695": {
+      "date": "2026-04-23",
+      "member_id": "1100695",
+      "name": "최정운",
+      "status": "AM",
+      "vehicle": "1119",
+      "is_verified": false,
+      "validation_error": "차량불일치(고정:1325)"
+    },
+    "700295": {
+      "date": "2026-04-23",
+      "member_id": "700295",
+      "name": "강부구",
+      "status": "PM",
+      "vehicle": "3737",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1901046": {
+      "date": "2026-04-23",
+      "member_id": "1901046",
+      "name": "박재홍",
+      "status": "AM",
+      "vehicle": "3737",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1001571": {
+      "date": "2026-04-23",
+      "member_id": "1001571",
+      "name": "이호재",
+      "status": "PM",
+      "vehicle": "3739",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "600789": {
+      "date": "2026-04-23",
+      "member_id": "600789",
+      "name": "이승옥",
+      "status": "AM",
+      "vehicle": "3739",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1100733": {
+      "date": "2026-04-23",
+      "member_id": "1100733",
+      "name": "박태일",
+      "status": "AM",
+      "vehicle": "3733",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1701037": {
+      "date": "2026-04-23",
+      "member_id": "1701037",
+      "name": "설수길",
+      "status": "PM",
+      "vehicle": "3733",
+      "is_verified": false,
+      "validation_error": "차량불일치(고정:3744)"
+    }
+  },
+  "2026-04-22": {
+    "2501595": {
+      "date": "2026-04-22",
+      "member_id": "2501595",
+      "name": "김용화",
+      "status": "AM",
+      "vehicle": "1023",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "NEW_곽노": {
+      "date": "2026-04-22",
+      "member_id": "NEW_곽노",
+      "name": "곽노",
+      "status": "PM",
+      "vehicle": "1023",
+      "is_verified": false,
+      "validation_error": "차량불일치(고정:3740)"
+    },
+    "2100539": {
+      "date": "2026-04-22",
+      "member_id": "2100539",
+      "name": "김동원",
+      "status": "PM",
+      "vehicle": "1325",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "2502102": {
+      "date": "2026-04-22",
+      "member_id": "2502102",
+      "name": "최재선",
+      "status": "AM",
+      "vehicle": "1325",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1001571": {
+      "date": "2026-04-22",
+      "member_id": "1001571",
+      "name": "이호재",
+      "status": "PM",
+      "vehicle": "3739",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "600789": {
+      "date": "2026-04-22",
+      "member_id": "600789",
+      "name": "이승옥",
+      "status": "AM",
+      "vehicle": "3739",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "100340": {
+      "date": "2026-04-22",
+      "member_id": "100340",
+      "name": "정정섭",
+      "status": "PM",
+      "vehicle": "1063",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1200722": {
+      "date": "2026-04-22",
+      "member_id": "1200722",
+      "name": "황민",
+      "status": "AM",
+      "vehicle": "1063",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1100733": {
+      "date": "2026-04-22",
+      "member_id": "1100733",
+      "name": "박태일",
+      "status": "AM",
+      "vehicle": "3733",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1301161": {
+      "date": "2026-04-22",
+      "member_id": "1301161",
+      "name": "박영철",
+      "status": "PM",
+      "vehicle": "3733",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1500426": {
+      "date": "2026-04-22",
+      "member_id": "1500426",
+      "name": "최민수",
+      "status": "PM",
+      "vehicle": "3740",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "900754": {
+      "date": "2026-04-22",
+      "member_id": "900754",
+      "name": "신태호",
+      "status": "AM",
+      "vehicle": "3740",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "700295": {
+      "date": "2026-04-22",
+      "member_id": "700295",
+      "name": "강부구",
+      "status": "PM",
+      "vehicle": "3737",
+      "is_verified": true,
+      "validation_error": "정상"
+    },
+    "1901046": {
+      "date": "2026-04-22",
+      "member_id": "1901046",
+      "name": "박재홍",
+      "status": "AM",
+      "vehicle": "3737",
+      "is_verified": true,
+      "validation_error": "정상"
+    }
+  }
+}

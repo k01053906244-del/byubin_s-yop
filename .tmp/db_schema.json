@@ -1,0 +1,39 @@
+{
+  "project": "버스기사다~얍 MVP (일삼이 통합비서)",
+  "version": "1.1.0",
+  "storage_type": "LocalStorage",
+  "entities": {
+    "master_members": {
+      "key": "bus_master_members",
+      "description": "24인 기사님 마스터 데이터",
+      "schema": {
+        "member_id": "string (사번)",
+        "name": "string (성함)",
+        "phone": "string (연락처)",
+        "fixed_off": "string (고정 휴무일 - 요일)",
+        "fixed_vehicle": "string (고정 차량 번호)"
+      }
+    },
+    "work_logs": {
+      "key": "bus_work_logs",
+      "description": "일자별 오전/오후 근무 상태 및 검증 결과",
+      "schema": {
+        "date": "string (YYYY-MM-DD)",
+        "member_id": "string",
+        "status": "string (AM | PM | ALL | OFF)",
+        "vehicle": "string",
+        "is_verified": "boolean",
+        "validation_error": "string (오타, 차량불일치, 휴무일근무 등)"
+      }
+    },
+    "fatigue_stats": {
+      "key": "bus_fatigue_stats",
+      "description": "연속 근무 일수 및 피로도 상태",
+      "schema": {
+        "member_id": "string",
+        "consecutive_days": "number",
+        "status": "string (NORMAL | CAUTION | DANGER)"
+      }
+    }
+  }
+}

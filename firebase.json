@@ -1,0 +1,31 @@
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "backups/**",
+      "band_extension/**",
+      "directives/**",
+      "execution/**",
+      "resources/**",
+      ".tmp/**",
+      "AGENTS.md",
+      "FIRST Prompt.txt",
+      "main_screen.html"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "projects": {
+    "default": "byubinfutureworks"
+  }
+}

@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>배차 및 근무 캘린더</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#001f27",
+                    "on-surface-variant": "#424654",
+                    "surface-container-low": "#f3f4f5",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e7e8e9",
+                    "inverse-surface": "#2e3132",
+                    "surface-container-highest": "#e1e3e4",
+                    "on-secondary-fixed-variant": "#004e5f",
+                    "tertiary-fixed": "#79f6ed",
+                    "primary": "#0040a1",
+                    "secondary": "#00677d",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#0056d2",
+                    "on-tertiary-container": "#6eece3",
+                    "on-background": "#191c1d",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed-variant": "#0040a1",
+                    "on-surface": "#191c1d",
+                    "surface-container": "#edeeef",
+                    "secondary-container": "#50d9fe",
+                    "secondary-fixed-dim": "#4cd6fb",
+                    "on-error": "#ffffff",
+                    "surface": "#f8f9fa",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#59dad1",
+                    "outline-variant": "#c3c6d6",
+                    "surface-dim": "#d9dadb",
+                    "primary-fixed": "#dae2ff",
+                    "outline": "#737785",
+                    "on-secondary-container": "#005c70",
+                    "primary-fixed-dim": "#b2c5ff",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed": "#b3ebff",
+                    "primary-container": "#0056d2",
+                    "on-tertiary-fixed": "#00201e",
+                    "tertiary": "#00504c",
+                    "surface-variant": "#e1e3e4",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#006a65",
+                    "background": "#f8f9fa",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-container": "#ccd8ff",
+                    "inverse-on-surface": "#f0f1f2",
+                    "inverse-primary": "#b2c5ff",
+                    "on-tertiary-fixed-variant": "#00504c",
+                    "surface-bright": "#f8f9fa",
+                    "on-primary-fixed": "#001847"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Lexend"],
+                    "body": ["Lexend"],
+                    "label": ["Lexend"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Lexend', sans-serif; }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-surface-container-high px-4 py-6 shadow-sm">
+<div class="flex items-center justify-between w-full max-w-md mx-auto">
+<button class="p-2 text-primary active:scale-95 transition-transform" style="">
+<span class="material-symbols-outlined text-2xl" style="">menu</span>
+</button>
+<h1 class="text-3xl font-black text-primary tracking-tighter" style="">버스기사다~얍 솔루션</h1>
+<button class="p-2 text-primary active:scale-95 transition-transform" style="">
+<span class="material-symbols-outlined text-2xl" style="">notifications</span>
+</button>
+</div>
+</header>
+<main class="pt-32 px-4 space-y-6 max-w-md mx-auto flex flex-col">
+<!-- Month Selector Section -->
+<section class="flex items-center justify-between px-2">
+<div class="flex items-center gap-2">
+<h2 class="text-3xl font-bold tracking-tight text-on-surface" style="">2024년 5월</h2>
+<span class="material-symbols-outlined text-primary" style="">expand_more</span>
+</div>
+<div class="flex gap-4">
+<button class="p-2 rounded-xl bg-surface-container-low hover:bg-slate-100 transition-colors" style="">
+<span class="material-symbols-outlined" style="">chevron_left</span>
+</button>
+<button class="p-2 rounded-xl bg-surface-container-low hover:bg-slate-100 transition-colors" style="">
+<span class="material-symbols-outlined" style="">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- Calendar Legend -->
+<div class="flex gap-4 px-2">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-error"></div>
+<span class="text-sm font-semibold text-on-surface-variant" style="">오전 근무 (AM)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-tertiary-container"></div>
+<span class="text-sm font-semibold text-on-surface-variant" style="">오후 근무 (PM)</span>
+</div>
+</div>
+<!-- Monthly Grid - Expanded for better readability -->
+<section class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_12px_40px_rgba(25,28,29,0.06)] flex-grow">
+<div class="grid grid-cols-7 mb-6">
+<div class="text-center text-sm font-bold text-error opacity-70" style="">일</div>
+<div class="text-center text-sm font-bold text-on-surface-variant" style="">월</div>
+<div class="text-center text-sm font-bold text-on-surface-variant" style="">화</div>
+<div class="text-center text-sm font-bold text-on-surface-variant" style="">수</div>
+<div class="text-center text-sm font-bold text-on-surface-variant" style="">목</div>
+<div class="text-center text-sm font-bold text-on-surface-variant" style="">금</div>
+<div class="text-center text-sm font-bold text-secondary-container" style="">토</div>
+</div>
+<div class="grid grid-cols-7 gap-y-6">
+<!-- Row 1 -->
+<div class="flex flex-col items-center py-3 opacity-30 text-base" style="">28</div>
+<div class="flex flex-col items-center py-3 opacity-30 text-base" style="">29</div>
+<div class="flex flex-col items-center py-3 opacity-30 text-base" style="">30</div>
+<div class="flex flex-col items-center py-3 relative">
+<span class="text-base font-bold mb-2" style="">1</span>
+<div class="w-2 h-2 rounded-full bg-error"></div>
+</div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">2</span>
+<div class="w-2 h-2 rounded-full bg-tertiary-container"></div>
+</div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">3</span>
+<div class="w-2 h-2 rounded-full bg-error"></div>
+</div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">4</span>
+</div>
+<!-- Row 2 -->
+<div class="flex flex-col items-center py-3"><span class="text-base font-bold mb-2 text-error" style="">5</span></div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">6</span>
+<div class="w-2 h-2 rounded-full bg-error"></div>
+</div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">7</span>
+<div class="w-2 h-2 rounded-full bg-tertiary-container"></div>
+</div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">8</span>
+<div class="w-2 h-2 rounded-full bg-error"></div>
+</div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">9</span>
+<div class="w-2 h-2 rounded-full bg-tertiary-container"></div>
+</div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">10</span>
+</div>
+<div class="flex flex-col items-center py-3"><span class="text-base font-bold mb-2 text-secondary-container" style="">11</span></div>
+<!-- Row 3 -->
+<div class="flex flex-col items-center py-3"><span class="text-base font-bold mb-2 text-error" style="">12</span></div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">13</span>
+<div class="w-2 h-2 rounded-full bg-error"></div>
+</div>
+<div class="flex flex-col items-center py-3 bg-primary-fixed rounded-2xl border-2 border-primary scale-110 shadow-lg z-10">
+<span class="text-base font-extrabold mb-2 text-primary" style="">14</span>
+<div class="w-2.5 h-2.5 rounded-full bg-error"></div>
+</div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">15</span>
+<div class="w-2 h-2 rounded-full bg-tertiary-container"></div>
+</div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">16</span>
+<div class="w-2 h-2 rounded-full bg-error"></div>
+</div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">17</span>
+</div>
+<div class="flex flex-col items-center py-3"><span class="text-base font-bold mb-2 text-secondary-container" style="">18</span></div>
+<!-- Row 4 -->
+<div class="flex flex-col items-center py-3"><span class="text-base font-bold mb-2 text-error" style="">19</span></div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">20</span>
+<div class="w-2 h-2 rounded-full bg-tertiary-container"></div>
+</div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">21</span>
+<div class="w-2 h-2 rounded-full bg-error"></div>
+</div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">22</span>
+</div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">23</span>
+<div class="w-2 h-2 rounded-full bg-tertiary-container"></div>
+</div>
+<div class="flex flex-col items-center py-3">
+<span class="text-base font-bold mb-2" style="">24</span>
+<div class="w-2 h-2 rounded-full bg-error"></div>
+</div>
+<div class="flex flex-col items-center py-3"><span class="text-base font-bold mb-2 text-secondary-container" style="">25</span></div>
+</div>
+</section>
+<!-- Shift Check Buttons -->
+<section class="space-y-4 pb-8">
+<div class="grid grid-cols-1 gap-3">
+<button class="w-full h-16 text-on-primary rounded-xl font-bold text-lg flex items-center justify-center gap-3 active:scale-[0.98] transition-transform shadow-md bg-error" style="">
+<span class="material-symbols-outlined text-2xl" style="">wb_sunny</span> 오전 근무 체크 (총 15일)
+            </button>
+<button class="w-full h-16 bg-tertiary-container text-on-tertiary-container rounded-xl font-bold text-lg flex items-center justify-center gap-3 active:scale-[0.98] transition-transform shadow-md" style="">
+<span class="material-symbols-outlined text-2xl" style="">dark_mode</span> 오후 근무 체크(총 14일)
+            </button>
+<button class="w-full h-16 bg-primary text-on-primary rounded-xl font-bold text-lg flex items-center justify-center gap-3 active:scale-[0.98] transition-transform shadow-md" style="">
+<span class="material-symbols-outlined text-2xl" style="">event_available</span> 전일 근무
+            </button>
+</div>
+<div class="flex flex-col gap-3">
+<button class="w-full h-12 bg-secondary text-on-secondary rounded-xl font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-transform shadow-sm" style="">
+<span class="material-symbols-outlined text-xl" style="">info</span> 운전자 매뉴얼
+            </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-8 pt-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl shadow-[0_-12px_40px_rgba(25,28,29,0.06)] z-50">
+<div class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 py-2 opacity-70 hover:opacity-100 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all px-2">
+<span class="material-symbols-outlined mb-1" style="">dashboard</span>
+<span class="text-xs font-semibold" style="">대시보드</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-100 rounded-2xl py-3 scale-105 transition-all px-3">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: &quot;FILL&quot; 1;">calendar_today</span>
+<span class="text-xs font-bold" style="">근무현황</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 py-2 opacity-70 hover:opacity-100 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all px-2">
+<span class="material-symbols-outlined mb-1" style="">group</span>
+<span class="text-xs font-semibold" style="">팀원정보</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-3 py-2 opacity-70 hover:opacity-100 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all px-2">
+<span class="material-symbols-outlined mb-1" style="">gavel</span>
+<span class="text-xs font-semibold" style="">노동법</span>
+</div>
+</nav>
+</body></html>
