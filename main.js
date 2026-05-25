@@ -1560,22 +1560,45 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             let confettiColors = ['#FFD700', '#FFA500', '#0dccf2', '#FFFFFF'];
+            let confettiConfig = {
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.6 }
+            };
 
             if (isRise) {
                 playPumpSound();
-                confettiColors = ['#ffd700', '#ffaa00', '#ffffff'];
+                // 상승일때는 빨간색 불꽃(Red/Gold)이 높이 휘날림
+                confettiColors = ['#ff0000', '#ff3300', '#ff6600', '#ffd700', '#ffffff'];
+                confettiConfig = {
+                    particleCount: 180,
+                    spread: 120,
+                    origin: { y: 0.6 },
+                    angle: 90,
+                    gravity: 0.7,
+                    ticks: 200,
+                    scalar: 1.2
+                };
             } else if (isFall) {
                 playWarningSound();
-                confettiColors = ['#0dccf2', '#00ccff', '#ffffff'];
+                // 하락일때는 파란색 불꽃(Blue/Cyan/Indigo)이 상단에서 아래로 떨어짐
+                confettiColors = ['#0022ff', '#0077ff', '#00ccff', '#0dccf2', '#ffffff'];
+                confettiConfig = {
+                    particleCount: 180,
+                    spread: 130,
+                    origin: { y: 0.1 }, // 상단에서
+                    angle: 270, // 아래 방향으로 투사
+                    gravity: 1.4, // 더 묵직하게 낙하
+                    ticks: 200,
+                    scalar: 1.2
+                };
             } else {
                 playVictorySound();
             }
 
             if (typeof confetti === 'function') {
                 confetti({
-                    particleCount: 150,
-                    spread: 100,
-                    origin: { y: 0.6 },
+                    ...confettiConfig,
                     colors: confettiColors
                 });
             }
