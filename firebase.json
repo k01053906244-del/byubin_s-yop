@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "backups/**",
+      "band_extension/**",
+      "directives/**",
+      "env사용삭제/**",
+      "execution/**",
+      "src/**"
+    ]
+  }
+}
