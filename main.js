@@ -1704,6 +1704,33 @@ function updateGoalProgress(currentBtc) {
 // -----------------------------------------
 // 모바일 접속 브릿지 감지
 // -----------------------------------------
+// 클립보드 복사 폴백 엔진 (모바일 인앱 브라우저/크롬 보안 우회 100% 보장)
+function fallbackCopyTextToClipboard(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.width = "2em";
+    textArea.style.height = "2em";
+    textArea.style.padding = "0";
+    textArea.style.border = "none";
+    textArea.style.outline = "none";
+    textArea.style.boxShadow = "none";
+    textArea.style.background = "transparent";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        const successful = document.execCommand('copy');
+        document.body.removeChild(textArea);
+        return successful;
+    } catch (err) {
+        document.body.removeChild(textArea);
+        return false;
+    }
+}
+
 function showMobileBridge() {
     const bridge = document.getElementById('mobile-bridge');
     const bridgeUrl = document.getElementById('bridge-url');
@@ -1712,7 +1739,8 @@ function showMobileBridge() {
 
     if (!bridge || !bridgeUrl) return;
 
-    const publicUrl = "https://my-last-ladder.vercel.app";
+    // [대표님 피드백 반영] 최신 파이어베이스 배포 주소로 완벽 고정!
+    const publicUrl = "https://awkward-shy-ai-1234.web.app";
     const currentHost = window.location.hostname;
 
     if (publicUrl && (currentHost === 'localhost' || currentHost === '127.0.0.1')) {
@@ -1735,7 +1763,8 @@ function showMobileBridge() {
     copyBtn.onclick = (e) => {
         e.preventDefault();
         const text = bridgeUrl.textContent;
-        navigator.clipboard.writeText(text).then(() => {
+        
+        const doSuccess = () => {
             const originalText = copyBtn.textContent;
             copyBtn.textContent = '복사 완료! (무한 공유 가능)';
             copyBtn.style.background = '#00ffcc';
@@ -1747,7 +1776,24 @@ function showMobileBridge() {
                 copyBtn.style.boxShadow = '';
                 bridge.classList.remove('active');
             }, 2000);
-        });
+        };
+
+        // 모바일/크롬 클립보드 하이브리드 복사 실행
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(doSuccess).catch(() => {
+                if (fallbackCopyTextToClipboard(text)) {
+                    doSuccess();
+                } else {
+                    prompt('아래 주소를 직접 복사하세요:', text);
+                }
+            });
+        } else {
+            if (fallbackCopyTextToClipboard(text)) {
+                doSuccess();
+            } else {
+                prompt('아래 주소를 직접 복사하세요:', text);
+            }
+        }
     };
 }
 
