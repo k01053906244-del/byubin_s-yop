@@ -1144,6 +1144,37 @@ let priceHistory = [];
 const ALERT_THRESHOLD = 1000000;
 let lastAlertTime = 0;
 let isFirstLoad = true;
+let currentPriceChange = 'EVEN'; // 전역 실시간 변동상태 캐싱
+
+// 초기 30분 REST API 백필 구현 (웹소켓 연결 전 차트 완성)
+async function backfillPriceHistory(historyArray) {
+    try {
+        const response = await fetch('https://api.upbit.com/v1/candles/minutes/1?market=KRW-BTC&count=30');
+        if (!response.ok) throw new Error('HTTP error ' + response.status);
+        const data = await response.json();
+        if (Array.isArray(data)) {
+            // 역순으로 정렬하여 가장 오래된 데이터가 앞쪽으로 오게 함
+            const sortedData = data.slice().reverse();
+            historyArray.length = 0; // 기존 배열 비우기
+            sortedData.forEach(candle => {
+                historyArray.push({
+                    time: candle.timestamp,
+                    price: candle.trade_price
+                });
+            });
+            // 초기 가격으로 live-btc-price 텍스트 세팅
+            const livePriceEl = document.getElementById('live-btc-price');
+            if (livePriceEl && historyArray.length > 0) {
+                const latestPrice = historyArray[historyArray.length - 1].price;
+                livePriceEl.textContent = latestPrice.toLocaleString('ko-KR');
+                localStorage.setItem('last_btc_price', latestPrice);
+            }
+            console.log(`Successfully backfilled ${historyArray.length} historical price points.`);
+        }
+    } catch (err) {
+        console.error("Failed to backfill price history:", err);
+    }
+}
 
 function initUpbitPriceTracker() {
     const livePriceEl = document.getElementById('live-btc-price');
@@ -1176,10 +1207,13 @@ function initUpbitPriceTracker() {
                     livePriceEl.textContent = currentPrice.toLocaleString('ko-KR');
                     if (data.change === 'RISE') {
                         livePriceEl.style.color = '#f7951d';
+                        currentPriceChange = 'RISE';
                     } else if (data.change === 'FALL') {
                         livePriceEl.style.color = '#0dccf2';
+                        currentPriceChange = 'FALL';
                     } else {
                         livePriceEl.style.color = '#fff';
+                        currentPriceChange = 'EVEN';
                     }
                 }
 
@@ -1509,32 +1543,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedBtc = localStorage.getItem('ladder_total_btc');
     if (savedBtc) updateGoalProgress(parseFloat(savedBtc));
 
-    // 로고 클릭 팡파레 & 폭죽
+    // 로고 클릭 팡파레 & 폭죽 (Confetti 라이브러리 로드 실패 시에도 소리는 정상 출력되도록 설계)
     const btcBadge = document.querySelector('.btc-badge');
-    if (btcBadge && typeof confetti === 'function') {
+    if (btcBadge) {
         btcBadge.style.cursor = 'pointer';
         btcBadge.addEventListener('click', () => {
             const livePriceEl = document.getElementById('live-btc-price');
-            const currentColor = window.getComputedStyle(livePriceEl).color;
+            let isRise = currentPriceChange === 'RISE';
+            let isFall = currentPriceChange === 'FALL';
+
+            // 폴백 검증 (CSS 계산 색상 검사)
+            if (!isRise && !isFall && livePriceEl) {
+                const currentColor = window.getComputedStyle(livePriceEl).color;
+                isRise = currentColor.includes('247') && currentColor.includes('149') || currentColor.toLowerCase().includes('f7951d');
+                isFall = currentColor.includes('13') && currentColor.includes('204') || currentColor.toLowerCase().includes('0dccf2');
+            }
 
             let confettiColors = ['#FFD700', '#FFA500', '#0dccf2', '#FFFFFF'];
 
-            if (currentColor.includes('247') && currentColor.includes('149')) {
+            if (isRise) {
                 playPumpSound();
                 confettiColors = ['#ffd700', '#ffaa00', '#ffffff'];
-            } else if (currentColor.includes('13') && currentColor.includes('204')) {
+            } else if (isFall) {
                 playWarningSound();
                 confettiColors = ['#0dccf2', '#00ccff', '#ffffff'];
             } else {
                 playVictorySound();
             }
 
-            confetti({
-                particleCount: 150,
-                spread: 100,
-                origin: { y: 0.6 },
-                colors: confettiColors
-            });
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 150,
+                    spread: 100,
+                    origin: { y: 0.6 },
+                    colors: confettiColors
+                });
+            }
         });
     }
 

@@ -38,14 +38,134 @@
             </div>
         </header>
 
-        <!-- Hero Section -->
-        <section class="hero-section">
+        <!-- Hero Section Header (Logo & Title) -->
+        <section class="hero-section" style="padding-bottom: 20px;">
             <div class="btc-glow-container">
                 <div class="btc-badge">
                     <img src="btc-logo.png" alt="Bitcoin Logo" class="btc-image">
                 </div>
             </div>
             <h1>비트코인이다~<span>얍!</span></h1>
+        </section>
+
+        <!-- 1. 사다리 섹션 (Interactive Ladder Section with Side Panels) -->
+        <section class="ladder-section-container" style="margin-top: 10px; margin-bottom: 40px;">
+            <div class="ladder-main-wrapper">
+                <div class="ladder-container">
+
+                    <!-- Left: AI Wisdom -->
+                    <aside class="ladder-side-panel left-panel">
+                        <div class="panel-header">
+                            <span class="panel-icon">💡</span>
+                            <h4>AI 부의 통찰</h4>
+                        </div>
+                        <div class="wisdom-content">
+                            <div class="quote-icon">"</div>
+                            <p id="wisdom-text" class="wisdom-text">사다리를 한 계단씩 오를 때마다 당신의 디지털 부는 견고해집니다.</p>
+                            <div class="wisdom-footer">— AI Wealth Assistant</div>
+                        </div>
+                        <div class="ladder-hint">
+                            <p>사다리 버튼을 눌러 부의 계단을 오르세요!</p>
+                        </div>
+                    </aside>
+
+                    <!-- Center: Ladder Card -->
+                    <div class="ladder-card">
+                        <div class="ladder-header"
+                            style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                            <h3
+                                style="font-size: 34px; font-weight: 900; text-align: center; text-shadow: 0 0 20px rgba(255,255,255,0.4); margin: 0;">
+                                사다리 한 계단 오르기</h3>
+                            <button class="reset-ladder-btn" id="reset-ladder-btn"
+                                style="position: static; margin-bottom: 5px;">↺ 초기화</button>
+                        </div>
+
+                        <div class="ladder-goal-container" style="margin-bottom: 25px;">
+                            <div class="goal-header"
+                                style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px; color: #aaa;">
+                                <span>목표: <strong id="current-goal-text">0.1 BTC</strong></span>
+                                <span id="goal-percent-text">0%</span>
+                            </div>
+                            <div class="goal-bar-bg"
+                                style="height: 10px; background: rgba(255,255,255,0.05); border-radius: 5px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+                                <div id="goal-bar-fill"
+                                    style="width: 0%; height: 100%; background: linear-gradient(90deg, #f7931a, #ffab40); box-shadow: 0 0 15px rgba(247, 147, 26, 0.6); transition: width 0.5s ease-out;">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ladder-total-display" style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 25px;">
+                            <span class="total-krw-secured" id="ladder-total-krw" style="font-size: 34px; font-weight: 900; color: #ffd700; text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);">0원 절약 적립!</span>
+                            <span class="total-btc-secured" id="ladder-total-btc" style="font-size: 16px; font-weight: 700; color: #0dccf2; text-shadow: 0 0 10px rgba(13, 204, 242, 0.4); display: block; margin-top: -5px;">+0.00000000 BTC 확보</span>
+                        </div>
+
+                        <div class="ladder-structure">
+                            <!-- Left and Right wooden poles -->
+                            <div class="ladder-pole left-pole"></div>
+                            <div class="ladder-pole right-pole"></div>
+
+                            <!-- Rung 1: Coffee -->
+                            <button class="ladder-rung-btn" data-type="coffee" data-krw="5000">
+                                <span class="rung-icon">☕</span>
+                                <div class="rung-text">
+                                    <span class="rung-title">커피 참기 <span
+                                            style="font-size: 11px; font-weight: 500;">(5,000원)</span></span>
+                                    <span class="rung-amount" style="font-size: 13px;">(+0.00000000 BTC)</span>
+                                </div>
+                                <div class="rung-badge" id="badge-coffee">0</div>
+                            </button>
+
+                            <!-- Rung 2: Alcohol -->
+                            <button class="ladder-rung-btn" data-type="alcohol" data-krw="50000">
+                                <span class="rung-icon">🍺</span>
+                                <div class="rung-text">
+                                    <span class="rung-title">술 안마시기 <span
+                                            style="font-size: 11px; font-weight: 500;">(50,000원)</span></span>
+                                    <span class="rung-amount" style="font-size: 13px;">(+0.00000000 BTC)</span>
+                                </div>
+                                <div class="rung-badge" id="badge-alcohol">0</div>
+                            </button>
+
+                            <!-- Rung 3: Dining -->
+                            <button class="ladder-rung-btn" data-type="dining" data-krw="100000">
+                                <span class="rung-icon">🍔</span>
+                                <div class="rung-text">
+                                    <span class="rung-title">외식 참기 <span
+                                            style="font-size: 11px; font-weight: 500;">(100,000원)</span></span>
+                                    <span class="rung-amount" style="font-size: 13px;">(+0.00000000 BTC)</span>
+                                </div>
+                                <div class="rung-badge" id="badge-dining">0</div>
+                            </button>
+
+                            <!-- Rung 4: Travel -->
+                            <button class="ladder-rung-btn" data-type="travel" data-krw="1000000">
+                                <span class="rung-icon">✈️</span>
+                                <div class="rung-text">
+                                    <span class="rung-title">여행 참기 <span
+                                            style="font-size: 11px; font-weight: 500;">(1,000,000원)</span></span>
+                                    <span class="rung-amount" style="font-size: 13px;">(+0.00000000 BTC)</span>
+                                </div>
+                                <div class="rung-badge" id="badge-travel">0</div>
+                            </button>
+                        </div> <!-- ends .ladder-structure -->
+                    </div> <!-- ends .ladder-card -->
+
+                    <!-- Right: Whale Tracker -->
+                    <aside class="ladder-side-panel right-panel">
+                        <div class="panel-header">
+                            <span class="panel-icon">🐋</span>
+                            <h4>실시간 고래 추적기</h4>
+                        </div>
+                        <div id="whale-feed" class="whale-feed">
+                            <!-- JS에서 동적으로 알림이 추가됩니다 -->
+                            <div class="whale-item initial">시장 움직임을 감시 중입니다...</div>
+                        </div>
+                    </aside>
+                </div> <!-- ends .ladder-container -->
+        </section>
+
+        <!-- Hero Section Body (Description, Aggro Grid, AI Suggested Prompts, News Ticker, Market Stats, Simulator Section) -->
+        <section class="hero-section" style="padding-top: 20px;">
             <p class="hero-desc">
                 시각, 청각, 지성이 결합된 하이엔드 비트코인 감각 플랫폼<br>
                 실시간 데이터 반응형 사운드 및 AI 기반 '어그로 버튼' 통찰 대시보드
@@ -175,122 +295,6 @@
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- Interactive Ladder Section with Side Panels -->
-        <section class="ladder-section-container">
-            <div class="ladder-main-wrapper">
-                <div class="ladder-container">
-
-                    <!-- Left: AI Wisdom -->
-                    <aside class="ladder-side-panel left-panel">
-                        <div class="panel-header">
-                            <span class="panel-icon">💡</span>
-                            <h4>AI 부의 통찰</h4>
-                        </div>
-                        <div class="wisdom-content">
-                            <div class="quote-icon">"</div>
-                            <p id="wisdom-text" class="wisdom-text">사다리를 한 계단씩 오를 때마다 당신의 디지털 부는 견고해집니다.</p>
-                            <div class="wisdom-footer">— AI Wealth Assistant</div>
-                        </div>
-                        <div class="ladder-hint">
-                            <p>사다리 버튼을 눌러 부의 계단을 오르세요!</p>
-                        </div>
-                    </aside>
-
-                    <!-- Center: Ladder Card -->
-                    <div class="ladder-card">
-                        <div class="ladder-header"
-                            style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                            <h3
-                                style="font-size: 34px; font-weight: 900; text-align: center; text-shadow: 0 0 20px rgba(255,255,255,0.4); margin: 0;">
-                                사다리 한 계단 오르기</h3>
-                            <button class="reset-ladder-btn" id="reset-ladder-btn"
-                                style="position: static; margin-bottom: 5px;">↺ 초기화</button>
-                        </div>
-
-                        <div class="ladder-goal-container" style="margin-bottom: 25px;">
-                            <div class="goal-header"
-                                style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px; color: #aaa;">
-                                <span>목표: <strong id="current-goal-text">0.1 BTC</strong></span>
-                                <span id="goal-percent-text">0%</span>
-                            </div>
-                            <div class="goal-bar-bg"
-                                style="height: 10px; background: rgba(255,255,255,0.05); border-radius: 5px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
-                                <div id="goal-bar-fill"
-                                    style="width: 0%; height: 100%; background: linear-gradient(90deg, #f7931a, #ffab40); box-shadow: 0 0 15px rgba(247, 147, 26, 0.6); transition: width 0.5s ease-out;">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="ladder-total-display" style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 25px;">
-                            <span class="total-krw-secured" id="ladder-total-krw" style="font-size: 34px; font-weight: 900; color: #ffd700; text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);">0원 절약 적립!</span>
-                            <span class="total-btc-secured" id="ladder-total-btc" style="font-size: 16px; font-weight: 700; color: #0dccf2; text-shadow: 0 0 10px rgba(13, 204, 242, 0.4); display: block; margin-top: -5px;">+0.00000000 BTC 확보</span>
-                        </div>
-
-                        <div class="ladder-structure">
-                            <!-- Left and Right wooden poles -->
-                            <div class="ladder-pole left-pole"></div>
-                            <div class="ladder-pole right-pole"></div>
-
-                            <!-- Rung 1: Coffee -->
-                            <button class="ladder-rung-btn" data-type="coffee" data-krw="5000">
-                                <span class="rung-icon">☕</span>
-                                <div class="rung-text">
-                                    <span class="rung-title">커피 참기 <span
-                                            style="font-size: 11px; font-weight: 500;">(5,000원)</span></span>
-                                    <span class="rung-amount" style="font-size: 13px;">(+0.00000000 BTC)</span>
-                                </div>
-                                <div class="rung-badge" id="badge-coffee">0</div>
-                            </button>
-
-                            <!-- Rung 2: Alcohol -->
-                            <button class="ladder-rung-btn" data-type="alcohol" data-krw="50000">
-                                <span class="rung-icon">🍺</span>
-                                <div class="rung-text">
-                                    <span class="rung-title">술 안마시기 <span
-                                            style="font-size: 11px; font-weight: 500;">(50,000원)</span></span>
-                                    <span class="rung-amount" style="font-size: 13px;">(+0.00000000 BTC)</span>
-                                </div>
-                                <div class="rung-badge" id="badge-alcohol">0</div>
-                            </button>
-
-                            <!-- Rung 3: Dining -->
-                            <button class="ladder-rung-btn" data-type="dining" data-krw="100000">
-                                <span class="rung-icon">🍔</span>
-                                <div class="rung-text">
-                                    <span class="rung-title">외식 참기 <span
-                                            style="font-size: 11px; font-weight: 500;">(100,000원)</span></span>
-                                    <span class="rung-amount" style="font-size: 13px;">(+0.00000000 BTC)</span>
-                                </div>
-                                <div class="rung-badge" id="badge-dining">0</div>
-                            </button>
-
-                            <!-- Rung 4: Travel -->
-                            <button class="ladder-rung-btn" data-type="travel" data-krw="1000000">
-                                <span class="rung-icon">✈️</span>
-                                <div class="rung-text">
-                                    <span class="rung-title">여행 참기 <span
-                                            style="font-size: 11px; font-weight: 500;">(1,000,000원)</span></span>
-                                    <span class="rung-amount" style="font-size: 13px;">(+0.00000000 BTC)</span>
-                                </div>
-                                <div class="rung-badge" id="badge-travel">0</div>
-                            </button>
-                        </div> <!-- ends .ladder-structure -->
-                    </div> <!-- ends .ladder-card -->
-
-                    <!-- Right: Whale Tracker -->
-                    <aside class="ladder-side-panel right-panel">
-                        <div class="panel-header">
-                            <span class="panel-icon">🐋</span>
-                            <h4>실시간 고래 추적기</h4>
-                        </div>
-                        <div id="whale-feed" class="whale-feed">
-                            <!-- JS에서 동적으로 알림이 추가됩니다 -->
-                            <div class="whale-item initial">시장 움직임을 감시 중입니다...</div>
-                        </div>
-                    </aside>
-                </div> <!-- ends .ladder-container -->
         </section>
 
         <!-- Dashboard Grid Content -->
