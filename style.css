@@ -1,3 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fastly.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+@font-face {
+    font-family: 'GmarketSansBold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
 :root {
     --bg-black: #050505;
     --card-dark: #0f1115;
@@ -45,7 +61,7 @@ body::after {
 body {
     background-color: var(--bg-black);
     color: var(--text-white);
-    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    font-family: 'Outfit', 'Pretendard', 'GmarketSansMedium', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     line-height: 1.5;
 }
 
@@ -78,25 +94,107 @@ body {
 .logo-area {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo-area:hover {
+    transform: scale(1.04) rotate(-0.5deg);
 }
 
 .logo-icon {
-    width: 24px;
-    height: 24px;
-    background: var(--accent-orange);
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #f7931a 0%, #ff7a00 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 800;
-    font-size: 14px;
-    color: black;
+    font-weight: 900;
+    font-size: 16px;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(247, 147, 26, 0.4);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo-area:hover .logo-icon {
+    transform: rotate(360deg);
+    box-shadow: 0 0 25px rgba(247, 147, 26, 0.8);
 }
 
 .logo-text {
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Premium Membership Badge */
+.premium-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(255, 147, 26, 0.06) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.25);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: all 0.3s ease;
+}
+
+.premium-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.12), transparent);
+    animation: premiumShimmer 3s infinite;
+}
+
+@keyframes premiumShimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.premium-badge:hover {
+    border-color: rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+    transform: scale(1.03);
+}
+
+.premium-badge-dot {
+    width: 7px;
+    height: 7px;
+    background: #00ff88;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(0, 255, 136, 0.7);
+    animation: livePulse 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes livePulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(0, 255, 136, 0.7); }
+    50% { opacity: 0.4; box-shadow: 0 0 2px rgba(0, 255, 136, 0.3); }
+}
+
+.premium-badge-text {
+    font-size: 11px;
     font-weight: 700;
-    font-size: 18px;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, #ffd700, #ffaa00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    white-space: nowrap;
 }
 
 .main-nav {
@@ -1673,13 +1771,23 @@ body {
     }
 
     .header-container {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
     }
 
     .logo-text {
         font-size: 16px;
+    }
+
+    .premium-badge {
+        padding: 4px 10px;
+    }
+
+    .premium-badge-text {
+        font-size: 9px;
     }
 
     .main-nav {
@@ -2030,6 +2138,141 @@ button.read-link:hover {
     transform: scale(0.95);
 }
 
+/* ===================================================================
+   비트코인이다~얍! 메인 헤드라인 럭셔리 타이틀 (뷰빈 Together 글씨체 연계)
+   =================================================================== */
+.main-hero-title {
+    /* '뷰빈 Together' 로고와 완벽히 패밀리 연동되는 최고급 이탤릭 테크 서체 장착 */
+    font-family: 'Outfit', 'Pretendard', sans-serif !important; 
+    font-size: 58px !important;
+    font-weight: 800 !important; /* Together 로고와 동일한 두께 */
+    font-style: italic !important; /* 오른쪽으로 날렵하고 부드럽게 눕는 힙한 이탤릭 스타일 */
+    text-align: center;
+    
+    /* 세련되고 영롱하게 빛나는 3색 럭셔리 메탈릭 그라데이션 */
+    background: linear-gradient(135deg, #ffffff 10%, #ffe066 50%, #f7931a 90%);
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+    
+    /* 테크놀로지 네온 조명 효과 */
+    filter: drop-shadow(0 4px 20px rgba(247, 147, 26, 0.5));
+    
+    margin: 90px 0 20px !important;
+    letter-spacing: -1.5px !important; /* 글자 사이를 쫀쫀하게 조여 명품 비율 선사 */
+    animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.main-hero-title span {
+    font-family: 'Outfit', 'Pretendard', sans-serif !important;
+    font-style: italic !important;
+    background: linear-gradient(135deg, #ffd700 0%, #ff5500 100%);
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+    font-weight: 900;
+    
+    /* 얍! 부분에 힙한 스케일 포인트와 감각적인 앵글 회전 부여 */
+    display: inline-block;
+    transform: scale(1.08) rotate(-1.5deg);
+    filter: drop-shadow(0 0 10px rgba(255, 85, 0, 0.45));
+}
+
+/* ===================================================================
+   적립금 매수실현 초격차 프리미엄 3D 캡슐 버튼
+   =================================================================== */
+#ladder-title-btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.18) 0%, rgba(20, 20, 20, 0.95) 100%);
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    border-radius: 50px;
+    font-size: 26px !important;
+    font-weight: 900;
+    
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.55),
+                0 0 15px rgba(255, 215, 0, 0.15),
+                inset 0 0 15px rgba(255, 215, 0, 0.05);
+    
+    /* 하드웨어 가속 시 텍스트 픽셀이 흐려지는 버그 방지 최적화 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    letter-spacing: 1px;
+    margin: 10px 0 !important;
+    cursor: pointer;
+}
+
+/* 텍스트 요소가 쉬머 가상요소보다 위에 뜨도록 강제 정렬 (블러/흐림 완전 종결) */
+#ladder-title-btn .btn-text {
+    position: relative;
+    z-index: 5 !important;
+    display: inline-block;
+    color: #ffffff !important;
+    
+    /* [버그 완전 해결] .ladder-header h3의 투명 컬러 및 백그라운드 클립 상속 버그 강제 차단! */
+    -webkit-text-fill-color: #ffffff !important;
+    text-fill-color: #ffffff !important;
+    -webkit-background-clip: border-box !important;
+    background-clip: border-box !important;
+    background: none !important; /* 배경 투명 유지 */
+    
+    opacity: 1 !important;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.95) !important; /* 칼처럼 날카롭고 선명한 섀도 */
+}
+
+/* 빛나는 띠 쉬머 애니메이션 효과 */
+#ladder-title-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.35) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg);
+    transition: 0.8s;
+    z-index: 1 !important; /* 글자 뒤로 배치 */
+}
+
+#ladder-title-btn:hover::before {
+    left: 150%;
+    transition: 0.8s;
+}
+
+#ladder-title-btn:hover {
+    transform: translate3d(0, -3px, 0) scale(1.03) !important;
+    border-color: rgba(255, 215, 0, 0.95);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.65),
+                0 0 25px rgba(255, 215, 0, 0.45),
+                inset 0 0 20px rgba(255, 215, 0, 0.25) !important;
+}
+
+#ladder-title-btn:hover .btn-text {
+    color: #ffd700 !important; /* 롤오버 시 선명한 골드 컬러 */
+    -webkit-text-fill-color: #ffd700 !important; /* 롤오버 시 투명상속 완벽 차단 */
+    text-shadow: 0 2px 7px rgba(0, 0, 0, 0.95) !important;
+}
+
+#ladder-title-btn:active {
+    transform: translate3d(0, 1px, 0) scale(0.97) !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4),
+                0 0 15px rgba(255, 215, 0, 0.2) !important;
+}
+
 .drawer-toggle-btn {
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }
@@ -2041,4 +2284,228 @@ button.read-link:hover {
 }
 .drawer-toggle-btn:active {
     transform: translateY(1px);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===================================================================
+   Premium Lockwall Overlay
+   =================================================================== */
+.premium-lockwall {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: lockwallFadeIn 0.5s ease;
+}
+
+@keyframes lockwallFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.lockwall-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.lockwall-card {
+    position: relative;
+    width: 90%;
+    max-width: 420px;
+    background: linear-gradient(160deg, rgba(20, 22, 28, 0.98) 0%, rgba(10, 10, 15, 0.98) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 24px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.08);
+    animation: lockwallCardSlide 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+}
+
+@keyframes lockwallCardSlide {
+    from { transform: translateY(40px) scale(0.95); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.lockwall-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(255, 215, 0, 0.05), transparent, rgba(255, 147, 26, 0.05), transparent);
+    animation: lockwallGlowSpin 8s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes lockwallGlowSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.lockwall-icon {
+    font-size: 52px;
+    margin-bottom: 10px;
+    animation: lockwallCrown 2s ease-in-out infinite;
+}
+
+@keyframes lockwallCrown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.lockwall-title {
+    font-size: 26px;
+    font-weight: 900;
+    background: linear-gradient(90deg, #ffd700, #ffaa00, #fff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0 0 8px 0;
+}
+
+.lockwall-subtitle {
+    font-size: 14px;
+    color: #aaa;
+    margin: 0 0 25px 0;
+    font-weight: 400;
+}
+
+.lockwall-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.lockwall-benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    font-size: 13px;
+    color: #ddd;
+    transition: all 0.2s ease;
+}
+
+.lockwall-benefit-item:hover {
+    background: rgba(255, 215, 0, 0.04);
+    border-color: rgba(255, 215, 0, 0.15);
+}
+
+.lockwall-benefit-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.lockwall-member-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 20px;
+    padding: 8px 0;
+}
+
+.lockwall-count-dot {
+    width: 6px;
+    height: 6px;
+    background: #00ff88;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(0, 255, 136, 0.7);
+    animation: livePulse 1.5s ease-in-out infinite;
+}
+
+.lockwall-member-count strong {
+    color: var(--accent-cyan);
+    font-size: 14px;
+}
+
+.lockwall-subscribe-btn {
+    width: 100%;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #ffd700 0%, #ff930f 100%);
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 800;
+    color: #000;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+}
+
+.lockwall-subscribe-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: premiumShimmer 2.5s infinite;
+}
+
+.lockwall-subscribe-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 215, 0, 0.5);
+}
+
+.lockwall-subscribe-btn:active {
+    transform: translateY(1px);
+}
+
+.lockwall-hint {
+    font-size: 11px;
+    color: #666;
+    margin: 15px 0 0 0;
+}
+
+/* Premium badge update when subscribed */
+.premium-badge.subscribed {
+    border-color: rgba(0, 255, 136, 0.4);
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.08) 0%, rgba(0, 200, 100, 0.06) 100%);
+}
+
+.premium-badge.subscribed .premium-badge-text {
+    background: linear-gradient(90deg, #00ff88, #00cc66);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+@media (max-width: 768px) {
+    .lockwall-card {
+        padding: 30px 20px;
+        max-width: 340px;
+    }
+    .lockwall-title {
+        font-size: 22px;
+    }
+    .lockwall-icon {
+        font-size: 42px;
+    }
 }

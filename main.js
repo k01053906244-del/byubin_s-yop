@@ -283,6 +283,63 @@ function triggerPriceFlash(type) {
     `;
     document.body.appendChild(flash);
     setTimeout(() => flash.remove(), 2000);
+
+    // [실시간 연동] 시세 변동 및 수동 트리거 시 비트코인 로고 연계 불꽃 효과 자동 작동!
+    const btcBadge = document.querySelector('.btc-badge');
+    if (typeof confetti === 'function' && btcBadge) {
+        const rect = btcBadge.getBoundingClientRect();
+        // 화면 대비 로고 위치 비율 구하기
+        const logoX = (rect.left + rect.width / 2) / window.innerWidth;
+        const logoY = rect.bottom / window.innerHeight;
+
+        if (type === 'pump') {
+            // 상승 불꽃: 적립금 매수실현처럼 로고 위치에서부터 진한 빨간색 불꽃이 한 번에 팡! 터지며 사방으로 쫙 넓게 솟구쳐 퍼짐
+            const confettiColors = ['#ff0000', '#ff1a1a', '#ff0033', '#d80000', '#ff0055']; // 더 진하고 강력한 순수 레드 계열 튜닝
+            
+            confetti({
+                particleCount: 260, // 압도적인 대량의 입자 수
+                spread: 130, // 사방으로 쫙 넓게 퍼져나가는 스프레드 (타격감 극대화)
+                origin: { x: logoX, y: logoY - 0.02 }, // 로고 바로 윗부분에서 발사
+                angle: 90, // 수직 위 방향으로 뿜어져 올라감
+                gravity: 0.8, // 웅장하게 날아올라 낙하하는 물리 적용
+                startVelocity: 42, // 시원하게 하늘로 치솟구치는 강력한 초기 속도
+                ticks: 240,
+                scalar: 1.2, // 큼직하고 존재감 있는 불꽃 크기
+                colors: confettiColors
+            });
+        } else if (type === 'warning') {
+            // 하락 소나기: 로고 전체 가로폭 밑단에서 은은하고 풍성하게 골고루 쏟아져 내림
+            const colors = ['#0077ff', '#00aaff', '#00ccff', '#88ddff', '#ffffff'];
+            const duration = 2000; // 2초 동안 풍성한 불꽃 샤워
+            const animationEnd = Date.now() + duration;
+
+            // 로고 가로폭의 화면 비율상 시작 지점(Left)과 총 너비(Width) 계산
+            const logoLeft = rect.left / window.innerWidth;
+            const logoWidth = rect.width / window.innerWidth;
+            
+            const interval = setInterval(() => {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+                
+                confetti({
+                    particleCount: 6,
+                    startVelocity: 0.5, // 뿜어내지 않고 자연스럽게 밑으로만 번지는 궤적
+                    ticks: 160,
+                    origin: {
+                        // 특정 한 지점이 아니라, 로고 왼쪽 끝부터 오른쪽 끝까지 골고루 분산 생성!
+                        x: logoLeft + Math.random() * logoWidth,
+                        y: logoY + 0.01
+                    },
+                    colors: colors,
+                    gravity: 0.38,
+                    scalar: 0.95,
+                    drift: Math.random() * 2.0 - 1.0
+                });
+            }, 40);
+        }
+    }
 }
 
 // -----------------------------------------
@@ -462,7 +519,7 @@ async function fetchRealtimeNews() {
             hotNewsData.push(...translatedNews);
 
             renderHotNews();
-            console.log('✅ 실시간 비트코인 핫뉴스 3종 완벽 기동 완료');
+            console.log('✅ 실시간 핵심지표 3종 완벽 기동 완료');
         }
     } catch (error) {
         console.error('❌ 실시간 뉴스 가져오기 실패:', error);
@@ -475,7 +532,7 @@ function renderHotNews() {
     if (!grid) return;
 
     if (hotNewsData.length === 0) {
-        grid.innerHTML = '<p style="color: #888; padding: 20px;">뉴스를 불러오는 중...</p>';
+        grid.innerHTML = '<p style="color: #888; padding: 20px;">실시간 핵심지표를 불러오는 중...</p>';
         return;
     }
 
@@ -484,7 +541,7 @@ function renderHotNews() {
             <h5>${news.title}</h5>
             <p>${news.desc}</p>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
-                <span class="click-hint" style="font-size: 11px; color: var(--accent-orange); opacity: 0.8;">상세 뉴스 보기 ⚡</span>
+                <span class="click-hint" style="font-size: 11px; color: var(--accent-orange); opacity: 0.8;">상세 분석 보기 ⚡</span>
                 <span style="font-size: 10px; color: #555;">${news.date || ''} ${news.source ? '| ' + news.source : ''}</span>
             </div>
         </div>
@@ -501,7 +558,7 @@ function renderHotNews() {
             const mBody = document.getElementById('modal-body');
 
             if (modal && mTag && mTitle && mDate && mBody) {
-                mTag.textContent = 'LIVE NEWS INSIGHT';
+                mTag.textContent = 'CORE INDICATOR INSIGHT';
                 mTag.style.color = '#f7931a';
                 mTitle.textContent = data.title;
                 mDate.textContent = data.date || 'REALTIME';
@@ -510,7 +567,7 @@ function renderHotNews() {
                 mBody.innerHTML = `
                     <div style="font-size: 17px; line-height: 1.8; color: #eee; text-align: center; padding: 40px 0;">
                         <div class="loader-circle" style="width: 40px; height: 40px; border: 3px solid rgba(247, 147, 26, 0.1); border-top-color: var(--accent-orange); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
-                        <p style="font-size: 14px; color: #aaa;">AI가 외신 기사 본문을 실시간 번역 요약 중입니다...</p>
+                        <p style="font-size: 14px; color: #aaa;">AI가 실시간 핵심지표 데이터를 분석 및 요약 중입니다...</p>
                     </div>
                 `;
 
@@ -528,15 +585,15 @@ function renderHotNews() {
                     mBody.innerHTML = `
                         <div style="font-size: 17px; line-height: 1.8; color: #eee;">
                             <p style="font-weight: 700; color: #fff; margin-bottom: 20px; font-size: 19px;">${data.desc}</p>
-                            <p style="margin-bottom: 20px; color: #aaa; font-size: 14px; font-style: italic;">[외신 원문 제목] ${data.rawTitle}</p>
+                            <p style="margin-bottom: 20px; color: #aaa; font-size: 14px; font-style: italic;">[글로벌 핵심지표 원문] ${data.rawTitle}</p>
                             <p style="margin-bottom: 20px; font-size: 15px; color: #d0d0d0; background: rgba(255,255,255,0.02); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">${trBody}</p>
-                            <p style="margin-top: 25px;"><a href="${data.url}" target="_blank" style="color: var(--accent-cyan); text-decoration: none; font-weight: 700;">🔗 외신 원문 직접 보기 →</a></p>
+                            <p style="margin-top: 25px;"><a href="${data.url}" target="_blank" style="color: var(--accent-cyan); text-decoration: none; font-weight: 700;">🔗 글로벌 지표 원문 직접 보기 →</a></p>
                             <p style="font-size: 13px; color: #888; margin-top: 10px;">출처: ${data.source}</p>
                             
                             <div style="margin-top: 30px; padding: 20px; background: rgba(255,147,26,0.05); border-radius: 12px; border: 1px dashed rgba(255,147,26,0.2);">
-                                <p style="margin: 0; color: var(--accent-orange); font-size: 14px; font-weight: 700;">💡 뷰빈의 비트코인이 이다~얍! AI 실시간 요약</p>
+                                <p style="margin: 0; color: var(--accent-orange); font-size: 14px; font-weight: 700;">💡 비트코인이다~얍! AI 핵심지표 실시간 통찰</p>
                                 <p style="margin: 10px 0 0 0; font-size: 13px; color: #ccc; line-height: 1.6;">
-                                    본 기사는 비트코인의 글로벌 시그널입니다. ${hasPositiveTone ? '강세장의 긍정적 촉매로 활약할 여지가 큼에 따라 적립식 매수를 한 계단 더 강화하여 디지털 부를 쟁취하기 유효한 타이밍입니다.' : '단기 변동성이 촉발될 수 있는 매물대 영역입니다. 차분히 200일 이평선의 장기 지지선을 관망하면서 사다리 DCA로 분산 대응하는 것이 유리합니다.'}
+                                    본 지표는 비트코인의 글로벌 핵심 시그널입니다. ${hasPositiveTone ? '강세장의 긍정적 촉매로 활약할 여지가 큼에 따라 적립금 매수실현 한 계단을 더 강화하여 디지털 부를 쟁취하기 유효한 타이밍입니다.' : '단기 변동성이 촉발될 수 있는 매물대 영역입니다. 차분히 200일 이평선의 장기 지지선을 관망하면서 사다리 적립금 매수실현(DCA)으로 분산 대응하는 것이 유리합니다.'}
                                 </p>
                             </div>
                         </div>
@@ -596,7 +653,7 @@ function getResponse(input) {
         return `현재 실시간 가격인 ${formattedPrice}원은 장기 200일 이동평균선(약 84,000,000원) 대비 상방에 위치하여 안정적인 지지를 받고 있습니다. 조급하게 익절하기보다 장기 반감기 희소성 및 공급 부족 상황을 고려하여 사다리 오르기 목표인 0.1 BTC 달성을 끝까지 완주해 보십시오.`;
     }
     if (cleanInput.includes('노트북') || cleanInput.includes('lm') || cleanInput.includes('서버')) {
-        return `구글 NotebookLM 기반의 최신 지식 베이스 연동이 정상 작동하고 있습니다. 우측 하단의 사다리 헬퍼 챗봇 및 대시보드 리포트는 뷰빈 퓨쳐웍스의 1등급 암호화 전문 자료들을 바탕으로 완벽히 검증 및 학습된 최신 금융 인사이트를 제공합니다.`;
+        return `구글 NotebookLM 기반의 최신 지식 베이스 연동이 정상 작동하고 있습니다. 우측 하단의 사다리 헬퍼 챗봇 및 대시보드 리포트는 뷰빈 Together의 1등급 암호화 전문 자료들을 바탕으로 완벽히 검증 및 학습된 최신 금융 인사이트를 제공합니다.`;
     }
 
     return `질문하신 내용에 대해 '비트코인이다~얍!' AI 모델이 실시간 시장 시세(${formattedPrice}원) 및 노트북LM 지식 베이스를 종합 분석해 드립니다. \n\n비트코인은 현재 단순 투기 자산이 아닌 글로벌 기관 자산 배분의 필수 자산으로 안착했습니다. 대시보드에 탑재된 [200일선], [해시레이트], [거래량] 지표 및 [반감기 미래 시뮬레이터] 퀵 프롬프트 단축키를 눌러 시장의 무결한 데이터 판세를 적극적으로 탐색하고 주체적으로 부의 지식을 습득해 보세요! 추가로 궁금한 키워드(예: '반감기', '해시레이트', '200일선', '사다리')를 물어보시면 즉각 상세 답변해 드립니다.`;
@@ -819,20 +876,20 @@ function initLadder() {
         });
     }
 
-    // 적립금 매수실현 타이틀 클릭 시 팡파레 + 금빛/빨간빛 꽃가루 + "수고하셨습니다" TTS 음성 안내
+    // 적립금 매수실현 타이틀 클릭 시 팡파레 + 강렬한 빨간색 꽃가루 + "수고하셨습니다" TTS 음성 안내
     const ladderTitleBtn = document.getElementById('ladder-title-btn');
     if (ladderTitleBtn) {
         ladderTitleBtn.addEventListener('click', () => {
             // 1. 빵빠레 효과음 재생
             playPumpSound();
 
-            // 2. 금빛/빨간빛 꽃가루 흩날리기
+            // 2. 강렬한 빨간색 중심의 꽃가루 흩날리기 (레드 컬러 극대화!)
             if (typeof confetti === 'function') {
                 confetti({
-                    particleCount: 160,
-                    spread: 120,
+                    particleCount: 200, // 더 풍성하고 시원한 만족감 부여
+                    spread: 130, // 넓게 퍼져 나감
                     origin: { y: 0.5 },
-                    colors: ['#ffd700', '#ffaa00', '#ff0033', '#ffffff']
+                    colors: ['#ff0000', '#ff1a1a', '#ff0033', '#e60000', '#ff3366', '#ffffff'] // 붉은 강렬함을 극대화한 딥 레드 위주의 배합
                 });
             }
 
@@ -1223,6 +1280,111 @@ function updateSimulator(years) {
         if (progressBarEl) progressBarEl.style.width = `${progressPercent}%`;
     } else {
         if (nextHalvingDateEl) nextHalvingDateEl.textContent = `${2024 + years}년 시뮬레이션`;
+    }
+
+    // [연동] 시뮬레이션 년도별 역사적 테이블 하일라이트 및 시각 분석 갱신
+    const col1 = document.getElementById('col-1st');
+    const col2 = document.getElementById('col-2nd');
+    const col3 = document.getElementById('col-3rd');
+    const col4 = document.getElementById('col-4th');
+    const th1 = document.getElementById('th-1st');
+    const th2 = document.getElementById('th-2nd');
+    const th3 = document.getElementById('th-3rd');
+    const th4 = document.getElementById('th-4th');
+    const insightText = document.getElementById('halving-insight-text');
+    const insightRating = document.getElementById('halving-insight-rating');
+    const infoBar4th = document.getElementById('infographic-4th-bar');
+    const infoText4th = document.getElementById('infographic-4th-text');
+
+    if (insightText) {
+        // 하이라이트 클래스 전원 초기화
+        [col1, col2, col3, col4].forEach(c => {
+            if (c) c.className = '';
+        });
+        [th1, th2, th3, th4].forEach(t => {
+            if (t) {
+                t.className = '';
+                t.style.color = '#fff';
+            }
+        });
+
+        if (years === 0 || years === 1) {
+            // 4차 반감기 하이라이트 (Cyan 테마)
+            if (col4) col4.className = 'highlight-col-cyan';
+            if (th4) {
+                th4.className = 'highlight-col-cyan-header';
+                th4.style.color = 'var(--accent-cyan)';
+            }
+            if (infoBar4th) infoBar4th.style.width = '35.4%';
+            if (infoText4th) {
+                infoText4th.textContent = '진행 및 확장 중 🚀';
+                infoText4th.style.color = 'var(--accent-cyan)';
+            }
+            
+            insightText.innerHTML = `현재 비트코인은 <strong>4차 반감기(보상 3.125 BTC)</strong> 진행형입니다. 역사적으로 반감기 당일 약 $65,000에서 출발하여, 기관 자금(ETF) 및 글로벌 자산 배분 수요와 맞물려 강력한 상승 동력을 형성하고 있습니다. 사다리 한 계단 오르기 '적립금 매수실현'을 적극 활용하기 극히 우수한 시기입니다.`;
+            if (insightRating) {
+                insightRating.textContent = '강력 신뢰도 ★★★★★';
+                insightRating.style.color = 'var(--accent-cyan)';
+                insightRating.style.background = 'rgba(0, 255, 204, 0.1)';
+            }
+        } else if (years === 5) {
+            // 미래 5차 가상 하이라이트 (Orange 테마)
+            if (col4) col4.className = 'highlight-col';
+            if (th4) {
+                th4.className = 'highlight-col-header';
+                th4.style.color = 'var(--accent-orange)';
+            }
+            if (infoBar4th) infoBar4th.style.width = '75%';
+            if (infoText4th) {
+                infoText4th.textContent = '5차 반감기 예측 가동 ⚡';
+                infoText4th.style.color = 'var(--accent-orange)';
+            }
+
+            insightText.innerHTML = `시뮬레이션에서 <strong>5년 후(2031년)</strong>로 시간 이동했습니다. 2028년 진행될 <strong>5차 반감기</strong> 이후 블록 보상은 <strong>1.5625 BTC</strong>로 급격히 반토막이 납니다. 인플레이션율은 약 0.38%로 공급 희소성의 한계치가 무너지며, 전례 없는 공급 부족 사태로 시가총액 대폭발이 이루어질 골든존입니다.`;
+            if (insightRating) {
+                insightRating.textContent = '예측 기회도 ★★★★★';
+                insightRating.style.color = 'var(--accent-orange)';
+                insightRating.style.background = 'rgba(255, 147, 26, 0.1)';
+            }
+        } else if (years === 10) {
+            // 10년 후 6차 반감기 시그널 (Orange 테마)
+            if (col4) col4.className = 'highlight-col';
+            if (th4) {
+                th4.className = 'highlight-col-header';
+                th4.style.color = 'var(--accent-orange)';
+            }
+            if (infoBar4th) infoBar4th.style.width = '90%';
+            if (infoText4th) {
+                infoText4th.textContent = '6차 초초희소성 도달 💎';
+                infoText4th.style.color = 'var(--accent-orange)';
+            }
+
+            insightText.innerHTML = `시뮬레이션에서 <strong>10년 후(2036년)</strong>에 도달했습니다. 2032년 <strong>6차 반감기</strong> 이후 블록 보상은 단 <strong>0.78125 BTC</strong>에 불과합니다. 금(Gold)의 가치를 완전히 추월하는 지구상 최고의 안전 자산으로 격상되며, 희귀한 디지털 원형 부동산의 지위를 지배하게 됩니다.`;
+            if (insightRating) {
+                insightRating.textContent = '자산 가치도 ★★★★★';
+                insightRating.style.color = 'var(--accent-orange)';
+                insightRating.style.background = 'rgba(255, 147, 26, 0.1)';
+            }
+        } else if (years === 114) {
+            // 2140년 최종 완판
+            if (col4) col4.className = 'highlight-col';
+            if (th4) {
+                th4.className = 'highlight-col-header';
+                th4.style.color = '#fff';
+            }
+            if (infoBar4th) infoBar4th.style.width = '100%';
+            if (infoText4th) {
+                infoText4th.textContent = '2140년 공급 한계점 완결 👑';
+                infoText4th.style.color = '#fff';
+            }
+
+            insightText.innerHTML = `시뮬레이션에서 <strong>2140년 최종 채굴 완판 시점</strong>을 목격하셨습니다. 총 2,100만 개의 비트코인 발행이 마침내 종료되어 신규 생성량은 <strong>0 BTC</strong>가 됩니다. 단 1사토시도 추가 발행될 수 없는 완전무결한 절대 화폐가 완성되며, 하이퍼-비트코인화가 완벽히 실현됩니다.`;
+            if (insightRating) {
+                insightRating.textContent = '궁극의 영속도 ★★★★★';
+                insightRating.style.color = '#fff';
+                insightRating.style.background = 'rgba(255, 255, 255, 0.1)';
+            }
+        }
     }
 }
 
@@ -1649,48 +1811,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 isFall = currentColor.includes('13') && currentColor.includes('204') || currentColor.toLowerCase().includes('0dccf2');
             }
 
-            let confettiColors = ['#FFD700', '#FFA500', '#0dccf2', '#FFFFFF'];
-            let confettiConfig = {
-                particleCount: 150,
-                spread: 100,
-                origin: { y: 0.6 }
-            };
-
             if (isRise) {
                 playPumpSound();
-                // 상승일때는 빨간색 불꽃(Red/Gold)이 높이 휘날림
-                confettiColors = ['#ff0000', '#ff3300', '#ff6600', '#ffd700', '#ffffff'];
-                confettiConfig = {
-                    particleCount: 180,
-                    spread: 120,
-                    origin: { y: 0.6 },
-                    angle: 90,
-                    gravity: 0.7,
-                    ticks: 200,
-                    scalar: 1.2
-                };
+                triggerPriceFlash('pump');
             } else if (isFall) {
                 playWarningSound();
-                // 하락일때는 파란색 불꽃(Blue/Cyan/Indigo)이 상단에서 아래로 떨어짐
-                confettiColors = ['#0022ff', '#0077ff', '#00ccff', '#0dccf2', '#ffffff'];
-                confettiConfig = {
-                    particleCount: 180,
-                    spread: 130,
-                    origin: { y: 0.1 }, // 상단에서
-                    angle: 270, // 아래 방향으로 투사
-                    gravity: 1.4, // 더 묵직하게 낙하
-                    ticks: 200,
-                    scalar: 1.2
-                };
+                triggerPriceFlash('warning');
             } else {
                 playVictorySound();
-            }
-
-            if (typeof confetti === 'function') {
-                confetti({
-                    ...confettiConfig,
-                    colors: confettiColors
-                });
+                if (typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 150,
+                        spread: 100,
+                        origin: { y: 0.6 },
+                        colors: ['#FFD700', '#FFA500', '#0dccf2', '#FFFFFF']
+                    });
+                }
             }
         });
     }
@@ -1916,3 +2052,218 @@ function initWisdomPanel() {
         });
     });
 }
+
+// =================================================================
+// [신규] 프리미엄 멤버십 락월 & 터치 카운터 시스템
+// =================================================================
+let screenTouchCount = 0;
+const TOUCH_LIMIT = 10;
+
+// 프리미엄 멤버 가입 여부 확인
+function isPremiumMember() {
+    return localStorage.getItem('premium_member') === 'true';
+}
+
+// 멤버 수 가져오기
+function getMemberCount() {
+    return parseInt(localStorage.getItem('premium_member_count') || '0', 10);
+}
+
+// 멤버 수 저장 및 UI 갱신
+function setMemberCount(count) {
+    localStorage.setItem('premium_member_count', count.toString());
+    updateMemberCountUI(count);
+}
+
+// 멤버 수 UI 업데이트
+function updateMemberCountUI(count) {
+    const countEl = document.getElementById('lockwall-count-number');
+    if (countEl) countEl.textContent = count.toLocaleString();
+    
+    // 헤더 뱃지 텍스트도 멤버 수 반영
+    const badgeText = document.querySelector('.premium-badge-text');
+    if (badgeText && isPremiumMember()) {
+        badgeText.textContent = `프리미엄 멤버 ${count.toLocaleString()}명`;
+    }
+}
+
+// 락월 표시
+function showLockwall() {
+    if (isPremiumMember()) return; // 프리미엄 멤버는 락월 미표시
+    
+    const lockwall = document.getElementById('premium-lockwall');
+    if (lockwall) {
+        // 멤버 수 표시
+        updateMemberCountUI(getMemberCount());
+        lockwall.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+// 락월 숨기기
+function hideLockwall() {
+    const lockwall = document.getElementById('premium-lockwall');
+    if (lockwall) {
+        lockwall.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+}
+
+// 프리미엄 멤버십 가입 처리
+function subscribePremium() {
+    // 멤버십 등록
+    localStorage.setItem('premium_member', 'true');
+    
+    // 멤버 수 증가
+    const newCount = getMemberCount() + 1;
+    setMemberCount(newCount);
+    
+    // 헤더 뱃지 스타일 변경 (가입 완료 표시)
+    const badge = document.getElementById('premium-badge');
+    if (badge) badge.classList.add('subscribed');
+    
+    // 터치 카운터 리셋
+    screenTouchCount = 0;
+    
+    // 락월 닫기
+    hideLockwall();
+    
+    // 축하 효과: 골드 폭죽 + 팡파레 + TTS
+    try {
+        if (typeof confetti === 'function') {
+            confetti({
+                particleCount: 150,
+                spread: 90,
+                origin: { y: 0.6 },
+                colors: ['#ffd700', '#ffaa00', '#ff930f', '#fff', '#00ff88']
+            });
+        }
+        if (typeof playPumpSound === 'function') playPumpSound();
+        
+        // TTS: "프리미엄 멤버십에 오신 것을 환영합니다"
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance('프리미엄 멤버십에 오신 것을 환영합니다');
+            utterance.lang = 'ko-KR';
+            utterance.rate = 0.9;
+            utterance.pitch = 1.1;
+            speechSynthesis.speak(utterance);
+        }
+    } catch (e) {
+        console.log('Celebration effects failed:', e);
+    }
+    
+    console.log('✅ 프리미엄 멤버십 가입 완료! 총 멤버 수:', newCount);
+}
+
+// 뷰빈 로고 클릭 핸들러
+function handleLogoClick() {
+    if (isPremiumMember()) {
+        // 프리미엄 멤버: 클릭 시 멤버 수 +1 저장 & 토스트 알림
+        const newCount = getMemberCount() + 1;
+        setMemberCount(newCount);
+        
+        // 토스트 알림 표시
+        showMemberToast(newCount);
+        
+        // 효과음
+        try {
+            if (typeof playVictorySound === 'function') playVictorySound();
+        } catch (e) {}
+        
+        console.log('👑 멤버 카운트 업데이트:', newCount);
+    } else {
+        // 비멤버: 일반 새로고침
+        location.reload();
+    }
+}
+
+// 멤버 카운트 토스트 알림
+function showMemberToast(count) {
+    // 기존 토스트 제거
+    const existingToast = document.getElementById('member-toast');
+    if (existingToast) existingToast.remove();
+    
+    const toast = document.createElement('div');
+    toast.id = 'member-toast';
+    toast.innerHTML = `
+        <div style="
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(0, 255, 136, 0.1));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 24px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 100000;
+            animation: toastSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        ">
+            <span style="font-size: 20px;">👑</span>
+            <span style="font-size: 13px; font-weight: 700; color: #ffd700;">
+                프리미엄 멤버 <span style="color: var(--accent-cyan); font-size: 16px;">${count.toLocaleString()}</span>명 달성!
+            </span>
+        </div>
+    `;
+    
+    // 토스트 애니메이션 스타일 주입
+    if (!document.getElementById('toast-animation-style')) {
+        const style = document.createElement('style');
+        style.id = 'toast-animation-style';
+        style.textContent = `
+            @keyframes toastSlideIn {
+                from { transform: translateX(-50%) translateY(-20px); opacity: 0; }
+                to { transform: translateX(-50%) translateY(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(toast);
+    
+    // 3초 후 자동 제거
+    setTimeout(() => {
+        toast.style.transition = 'opacity 0.5s ease';
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 500);
+    }, 3000);
+}
+
+// 화면 터치/클릭 카운터 (프리미엄 미가입자 대상)
+function initTouchCounter() {
+    if (isPremiumMember()) {
+        // 이미 가입한 멤버는 뱃지 스타일 변경 및 멤버 수 표시
+        const badge = document.getElementById('premium-badge');
+        if (badge) badge.classList.add('subscribed');
+        updateMemberCountUI(getMemberCount());
+        return;
+    }
+    
+    // 세션당 터치 카운트 (sessionStorage로 세션마다 리셋)
+    screenTouchCount = parseInt(sessionStorage.getItem('touch_count') || '0', 10);
+    
+    document.addEventListener('click', (e) => {
+        if (isPremiumMember()) return;
+        
+        // 락월 내부 클릭은 카운트하지 않음
+        if (e.target.closest('.premium-lockwall')) return;
+        if (e.target.closest('.lockwall-card')) return;
+        
+        screenTouchCount++;
+        sessionStorage.setItem('touch_count', screenTouchCount.toString());
+        
+        if (screenTouchCount >= TOUCH_LIMIT) {
+            showLockwall();
+        }
+    }, true);
+}
+
+// 초기화: DOMContentLoaded에서 터치 카운터 가동
+document.addEventListener('DOMContentLoaded', () => {
+    initTouchCounter();
+});
