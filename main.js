@@ -2316,7 +2316,6 @@ function initTouchCounter() {
         const badge = document.getElementById('premium-badge');
         if (badge) badge.classList.add('subscribed');
         updateMemberCountUI(getMemberCount());
-        return;
     }
     
     // 세션당 터치 카운트 (sessionStorage로 세션마다 리셋)
