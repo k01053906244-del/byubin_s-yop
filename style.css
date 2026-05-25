@@ -58,6 +58,13 @@ body::after {
     box-sizing: border-box;
 }
 
+html, body {
+    width: 100%;
+    overflow-x: hidden; /* X축 흔들림 원천 차단 */
+    position: relative;
+    -webkit-text-size-adjust: 100%; /* iOS 사파리 폰트 강제 확대 방지 */
+}
+
 body {
     background-color: var(--bg-black);
     color: var(--text-white);
@@ -69,6 +76,8 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 40px;
+    width: 100%;
+    overflow-x: hidden; /* 가로 미끄러짐 완벽 방쇄 */
 }
 
 @media (max-width: 768px) {
