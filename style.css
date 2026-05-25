@@ -152,7 +152,7 @@ body {
     backdrop-filter: blur(12px);
     position: relative;
     overflow: hidden;
-    cursor: pointer;
+    cursor: default;
     transition: all 0.3s ease;
 }
 
@@ -2439,12 +2439,6 @@ button.read-link:hover {
     color: #999;
     margin-bottom: 20px;
     padding: 8px 0;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
-
-.lockwall-member-count:hover {
-    color: #fff;
 }
 
 .lockwall-count-dot {
