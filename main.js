@@ -761,6 +761,39 @@ function initLadder() {
             } catch (err) {}
         });
     }
+
+    // 적립금 매수실현 타이틀 클릭 시 팡파레 + 금빛/빨간빛 꽃가루 + "수고하셨습니다" TTS 음성 안내
+    const ladderTitleBtn = document.getElementById('ladder-title-btn');
+    if (ladderTitleBtn) {
+        ladderTitleBtn.addEventListener('click', () => {
+            // 1. 빵빠레 효과음 재생
+            playPumpSound();
+
+            // 2. 금빛/빨간빛 꽃가루 흩날리기
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 160,
+                    spread: 120,
+                    origin: { y: 0.5 },
+                    colors: ['#ffd700', '#ffaa00', '#ff0033', '#ffffff']
+                });
+            }
+
+            // 3. "수고하셨습니다" 한국어 음성 안내 (Web Speech API TTS)
+            if ('speechSynthesis' in window) {
+                try {
+                    window.speechSynthesis.cancel(); // 진행 중인 음성 즉시 중단 후 재생
+                    const utterance = new SpeechSynthesisUtterance("수고하셨습니다");
+                    utterance.lang = "ko-KR";
+                    utterance.rate = 0.95; // 안정감 있는 속도
+                    utterance.pitch = 1.0;
+                    window.speechSynthesis.speak(utterance);
+                } catch (e) {
+                    console.warn("Speech synthesis failed:", e);
+                }
+            }
+        });
+    }
 }
 
 // -----------------------------------------
@@ -1627,7 +1660,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 전역 비 간섭형 클릭음 & 시각 물결 파동
     document.addEventListener('click', (e) => {
         // 특정 전용 사운드가 바인딩된 버튼 클릭 시 공용 비프음 스킵!
-        if (e.target.closest('button, a, .news-card, .btc-badge, .why-btc-card, .sim-btn, .quick-question-btn')) {
+        if (e.target.closest('button, a, .news-card, .btc-badge, .why-btc-card, .sim-btn, .quick-question-btn, #ladder-title-btn')) {
             return;
         }
 

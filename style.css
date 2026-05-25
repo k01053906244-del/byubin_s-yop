@@ -1997,3 +1997,15 @@ button.read-link:hover {
         gap: 20px !important;
     }
 }
+
+.interactive-glow-title {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    user-select: none;
+}
+.interactive-glow-title:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 10px rgba(255, 255, 255, 0.6) !important;
+}
+.interactive-glow-title:active {
+    transform: scale(0.95);
+}
