@@ -1,0 +1,24 @@
+{
+  "name": "비트코인이다~얍!",
+  "short_name": "비트이다~얍",
+  "description": "하이엔드 비트코인 감각 플랫폼 - 시각, 청각, 지성의 결합",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#f7931a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "btc-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "btc-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
