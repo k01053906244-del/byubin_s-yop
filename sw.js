@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bit-ida-yap-v3';
+const CACHE_NAME = 'bit-ida-yap-v6';
 const ASSETS = [
   './',
   './index.html',
@@ -31,16 +31,25 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  // 웹소켓이나 외부 API(Upbit, Alternative) 요청은 캐싱하지 않고 네트워크로 직접 요청
+  // 외부 API 요청은 캐싱하지 않고 네트워크로 직접 요청
   if (e.request.url.includes('api.upbit.com') || e.request.url.includes('alternative.me') || e.request.url.includes('min-api.cryptocompare.com') || e.request.url.includes('translate.googleapis.com')) {
     return;
   }
-  
+
+  // 네트워크 우선 전략: 항상 최신 파일을 가져오고, 오프라인일 때만 캐시 사용
   e.respondWith(
-    caches.match(e.request).then((cachedResponse) => {
-      return cachedResponse || fetch(e.request).catch(() => {
-        // 네트워크 실패 시 조용히 실패 처리
-      });
+    fetch(e.request).then((networkResponse) => {
+      // 네트워크 성공 시 캐시도 갱신
+      if (networkResponse && networkResponse.status === 200) {
+        const responseClone = networkResponse.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(e.request, responseClone);
+        });
+      }
+      return networkResponse;
+    }).catch(() => {
+      // 네트워크 실패(오프라인) 시 캐시에서 제공
+      return caches.match(e.request);
     })
   );
 });

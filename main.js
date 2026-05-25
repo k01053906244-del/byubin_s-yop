@@ -1708,9 +1708,21 @@ function updateGoalProgress(currentBtc) {
 function initApp() {
     // PWA 서비스 워커 등록 가동!
     if ('serviceWorker' in navigator) {
+        // 새 서비스 워커가 활성화되면 자동 새로고침
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (!refreshing) {
+                refreshing = true;
+                window.location.reload();
+            }
+        });
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('./sw.js')
-                .then(reg => console.log('✅ PWA 서비스 워커 등록 성공:', reg))
+                .then(reg => {
+                    console.log('✅ PWA 서비스 워커 등록 성공:', reg);
+                    // 매번 새 버전 확인
+                    reg.update();
+                })
                 .catch(err => console.error('❌ PWA 서비스 워커 등록 실패:', err));
         });
     }
@@ -1727,9 +1739,9 @@ function initApp() {
         logoText.title = '클릭하면 주소를 복사합니다';
         logoText.addEventListener('click', () => {
             const url = window.location.href;
-            navigator.clipboard.writeText(url).then(() => {
+            const showToast = (msg) => {
                 const toast = document.createElement('div');
-                toast.textContent = '✅ 주소가 복사되었습니다! ' + url;
+                toast.textContent = msg;
                 toast.style.cssText = `
                     position: fixed; top: 70px; left: 50%; transform: translateX(-50%);
                     background: rgba(0,0,0,0.85); color: #00ffcc;
@@ -1743,8 +1755,22 @@ function initApp() {
                 document.body.appendChild(toast);
                 setTimeout(() => { toast.style.opacity = '0'; }, 2000);
                 setTimeout(() => toast.remove(), 2500);
+            };
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('✅ 주소가 복사되었습니다!');
             }).catch(() => {
-                prompt('아래 주소를 복사하세요:', url);
+                try {
+                    const ta = document.createElement('textarea');
+                    ta.value = url;
+                    ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0;';
+                    document.body.appendChild(ta);
+                    ta.focus(); ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    showToast('✅ 주소가 복사되었습니다!');
+                } catch(e) {
+                    showToast('❌ 복사 실패. 주소창에서 직접 복사해 주세요.');
+                }
             });
         });
     }
