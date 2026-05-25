@@ -852,6 +852,7 @@ function initLadder() {
             localStorage.removeItem('premium_member');
             sessionStorage.removeItem('touch_count');
             screenTouchCount = 0;
+            setMemberCount(0); // 프리미엄 멤버 수 초기화 (0명으로 세팅)
 
             // 프리미엄 뱃지 스타일 복구
             const badge = document.getElementById('premium-badge');
@@ -2099,6 +2100,38 @@ function setMemberCount(count) {
     updateMemberCountUI(count);
 }
 
+// 프리미엄 멤버 수 임의 수정 함수 (대표님 요구 사항 반영)
+function modifyMemberCount() {
+    const currentCount = getMemberCount();
+    const input = prompt("변경할 프리미엄 멤버 수를 입력하세요 (숫자만 입력):", currentCount);
+    
+    if (input === null) return; // 취소 클릭 시 스킵
+    
+    const newCount = parseInt(input.trim(), 10);
+    if (!isNaN(newCount) && newCount >= 0) {
+        setMemberCount(newCount);
+        
+        // 프리미엄 멤버십 완료 여부와 관계없이 뱃지 텍스트 갱신
+        const badgeText = document.querySelector('.premium-badge-text');
+        if (badgeText) {
+            if (isPremiumMember()) {
+                badgeText.textContent = `프리미엄 멤버 ${newCount.toLocaleString()}명`;
+            } else {
+                badgeText.textContent = `프리미엄 멤버십 운영중 (${newCount.toLocaleString()}명)`;
+            }
+        }
+        
+        // 락월 내부 카운트 텍스트도 즉시 업데이트
+        const countEl = document.getElementById('lockwall-count-number');
+        if (countEl) countEl.textContent = newCount.toLocaleString();
+        
+        // 토스트 알림 표시
+        showMemberToast(newCount);
+    } else {
+        alert("유효한 숫자를 입력해 주세요.");
+    }
+}
+
 // 멤버 수 UI 업데이트
 function updateMemberCountUI(count) {
     const countEl = document.getElementById('lockwall-count-number');
@@ -2257,6 +2290,27 @@ function showMemberToast(count) {
 
 // 화면 터치/클릭 카운터 (프리미엄 미가입자 대상)
 function initTouchCounter() {
+    // [대표님 피드백 반영] 멤버십 수동 수정 클릭 이벤트 바인딩
+    const badgeEl = document.getElementById('premium-badge');
+    if (badgeEl) {
+        badgeEl.title = '클릭하여 프리미엄 멤버 수를 임의로 수정할 수 있습니다';
+        badgeEl.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            modifyMemberCount();
+        };
+    }
+
+    const lockwallMemberCount = document.getElementById('lockwall-member-count');
+    if (lockwallMemberCount) {
+        lockwallMemberCount.title = '클릭하여 프리미엄 멤버 수를 임의로 수정할 수 있습니다';
+        lockwallMemberCount.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            modifyMemberCount();
+        };
+    }
+
     if (isPremiumMember()) {
         // 이미 가입한 멤버는 뱃지 스타일 변경 및 멤버 수 표시
         const badge = document.getElementById('premium-badge');
