@@ -167,15 +167,24 @@
 
         <!-- Hero Section Body (Description, Aggro Grid, AI Suggested Prompts, News Ticker, Market Stats, Simulator Section) -->
         <section class="hero-section" style="padding-top: 20px;">
-            <p class="hero-desc">
-                시각, 청각, 지성이 결합된 하이엔드 비트코인 감각 플랫폼<br>
-                실시간 데이터 반응형 사운드 및 AI 기반 '어그로 버튼' 통찰 대시보드
-            </p>
+            <!-- 1안: 아코디언 접이식 서랍 컨테이너 -->
+            <div class="drawer-toggle-container" style="margin: 20px auto 30px; max-width: 800px; padding: 0 10px;">
+                <button id="aggro-drawer-toggle" class="drawer-toggle-btn" style="width: 100%; padding: 15px; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); font-size: 15px; font-weight: 700; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.3); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; outline: none;">
+                    🔮 AI '어그로 버튼' 통찰 대시보드 <span id="drawer-arrow" style="transition: transform 0.3s ease; display: inline-block;">▼ 펼치기</span>
+                </button>
+            </div>
 
-            <!-- New Aggro Buttons Grid -->
-            <div class="aggro-grid-container" style="margin: 40px auto; max-width: 800px;">
-                <div class="aggro-grid" id="aggro-grid">
-                    <!-- JS에서 2x5 그리드로 동적 생성됩니다 -->
+            <div id="aggro-drawer-content" class="collapsible-drawer-content" style="max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease, visibility 0.3s; opacity: 0; visibility: hidden;">
+                <p class="hero-desc" style="margin-top: 10px; margin-bottom: 25px;">
+                    시각, 청각, 지성이 결합된 하이엔드 비트코인 감각 플랫폼<br>
+                    실시간 데이터 반응형 사운드 및 AI 기반 '어그로 버튼' 통찰 대시보드
+                </p>
+
+                <!-- New Aggro Buttons Grid -->
+                <div class="aggro-grid-container" style="margin: 20px auto 40px; max-width: 800px;">
+                    <div class="aggro-grid" id="aggro-grid">
+                        <!-- JS에서 2x5 그리드로 동적 생성됩니다 -->
+                    </div>
                 </div>
             </div>
 

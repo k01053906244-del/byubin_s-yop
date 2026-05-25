@@ -1747,6 +1747,33 @@ document.addEventListener('DOMContentLoaded', () => {
     startWhaleTracker();
     initWisdomPanel();
     showMobileBridge();
+
+    // [신규] 1안: AI '어그로 버튼' 아코디언 접이식 서랍 토글 리스너
+    const drawerToggle = document.getElementById('aggro-drawer-toggle');
+    const drawerContent = document.getElementById('aggro-drawer-content');
+    const drawerArrow = document.getElementById('drawer-arrow');
+
+    if (drawerToggle && drawerContent) {
+        drawerToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            const isActive = drawerContent.classList.toggle('active');
+            if (isActive) {
+                drawerContent.style.maxHeight = drawerContent.scrollHeight + 'px';
+                drawerContent.style.opacity = '1';
+                drawerContent.style.visibility = 'visible';
+                if (drawerArrow) drawerArrow.textContent = '▲ 접기';
+                drawerToggle.style.borderColor = 'rgba(0, 243, 255, 0.4)';
+                drawerToggle.style.boxShadow = '0 0 15px rgba(0, 243, 255, 0.15)';
+            } else {
+                drawerContent.style.maxHeight = '0';
+                drawerContent.style.opacity = '0';
+                drawerContent.style.visibility = 'hidden';
+                if (drawerArrow) drawerArrow.textContent = '▼ 펼치기';
+                drawerToggle.style.borderColor = 'rgba(255,255,255,0.08)';
+                drawerToggle.style.boxShadow = 'none';
+            }
+        });
+    }
 });
 
 // -----------------------------------------
