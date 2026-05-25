@@ -848,6 +848,23 @@ function initLadder() {
             localStorage.removeItem('ladder_total_krw');
             localStorage.removeItem('ladder_total_btc');
             localStorage.removeItem('ladder_clicked_counts');
+            // [테스트 편의 기능] 초기화 시 프리미엄 가입 상태도 함께 리셋하여 락업 10회 터치를 무한정 다시 테스트 가능!
+            localStorage.removeItem('premium_member');
+            sessionStorage.removeItem('touch_count');
+            screenTouchCount = 0;
+
+            // 프리미엄 뱃지 스타일 복구
+            const badge = document.getElementById('premium-badge');
+            if (badge) {
+                badge.classList.remove('subscribed');
+            }
+            const badgeText = document.querySelector('.premium-badge-text');
+            if (badgeText) {
+                badgeText.textContent = '프리미엄 멤버십 운영중';
+            }
+
+            // 락월 닫기
+            hideLockwall();
 
             rungBtns.forEach(btn => {
                 const badge = btn.querySelector('.rung-badge');
@@ -1736,7 +1753,7 @@ function showMobileBridge() {
 // -----------------------------------------
 // 페이지 로딩 완료 시 실행 컨텍스트
 // -----------------------------------------
-document.addEventListener('DOMContentLoaded', () => {
+function initApp() {
     // PWA 서비스 워커 등록 가동!
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -1967,7 +1984,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-});
+}
+
+// 초기화: DOMContentLoaded 및 readyState 안전성 가동
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
 
 // -----------------------------------------
 // 고래 추적기 시뮬레이터
@@ -2111,10 +2135,10 @@ function hideLockwall() {
 
 // 프리미엄 멤버십 가입 처리
 function subscribePremium() {
-    // 멤버십 등록
+    // 멤버십 등록 (프리미엄 활성화)
     localStorage.setItem('premium_member', 'true');
     
-    // 멤버 수 증가
+    // Increment premium count by 1 upon active subscription
     const newCount = getMemberCount() + 1;
     setMemberCount(newCount);
     
@@ -2158,21 +2182,18 @@ function subscribePremium() {
 // 뷰빈 로고 클릭 핸들러
 function handleLogoClick() {
     if (isPremiumMember()) {
-        // 프리미엄 멤버: 클릭 시 멤버 수 +1 저장 & 토스트 알림
-        const newCount = getMemberCount() + 1;
-        setMemberCount(newCount);
+        // Read-only member count inquiry (Do not increment by clicking)
+        const currentCount = getMemberCount();
         
-        // 토스트 알림 표시
-        showMemberToast(newCount);
+        // Display toast with the current count
+        showMemberToast(currentCount);
         
-        // 효과음
         try {
             if (typeof playVictorySound === 'function') playVictorySound();
         } catch (e) {}
         
-        console.log('👑 멤버 카운트 업데이트:', newCount);
+        console.log('👑 Read premium member count:', currentCount);
     } else {
-        // 비멤버: 일반 새로고침
         location.reload();
     }
 }
@@ -2247,12 +2268,22 @@ function initTouchCounter() {
     // 세션당 터치 카운트 (sessionStorage로 세션마다 리셋)
     screenTouchCount = parseInt(sessionStorage.getItem('touch_count') || '0', 10);
     
+    if (screenTouchCount >= TOUCH_LIMIT) {
+        showLockwall();
+    }
+    
     document.addEventListener('click', (e) => {
         if (isPremiumMember()) return;
         
         // 락월 내부 클릭은 카운트하지 않음
         if (e.target.closest('.premium-lockwall')) return;
         if (e.target.closest('.lockwall-card')) return;
+        
+        // 10회 도달 시 이미 락월 표시 상태이므로 얼리 리턴
+        if (screenTouchCount >= TOUCH_LIMIT) {
+            showLockwall();
+            return;
+        }
         
         screenTouchCount++;
         sessionStorage.setItem('touch_count', screenTouchCount.toString());
@@ -2263,7 +2294,11 @@ function initTouchCounter() {
     }, true);
 }
 
-// 초기화: DOMContentLoaded에서 터치 카운터 가동
-document.addEventListener('DOMContentLoaded', () => {
+// 초기화: DOMContentLoaded 및 readyState 안전성 가동
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        initTouchCounter();
+    });
+} else {
     initTouchCounter();
-});
+}

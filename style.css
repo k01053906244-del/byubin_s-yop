@@ -75,6 +75,13 @@ body {
     .page-wrapper {
         padding: 0 15px;
     }
+    .btc-glow-container {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        height: 280px !important; /* 모바일 및 작은 화면에서는 높이를 최적화 */
+        border-radius: 16px !important; /* 모바일에 알맞은 콤팩트한 모서리 마감 */
+    }
 }
 
 /* Header */
@@ -249,19 +256,25 @@ body {
 }
 
 .btc-glow-container {
-    width: 600px;
-    height: 300px;
-    margin: 0 auto 40px;
+    width: 100% !important;
+    max-width: 1200px !important; /* 부모 컨테이너 너비와 일치시켜 음수 마진 쏠림 버그 100% 해결 */
+    height: 600px;     /* 기존 300px의 정확히 2배 높이 스케일 */
+    margin: 0 auto 40px !important; /* 양 마진 auto로 자석 같은 정중앙 정렬 보장 */
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    background: radial-gradient(circle, rgba(0, 255, 204, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
-    border-radius: 24px;
-    border: 1px solid rgba(0, 255, 204, 0.15);
+    background: radial-gradient(circle, rgba(0, 255, 204, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+    border-radius: 28px; /* 넓은 크기에 알맞은 부드러운 라운딩 */
+    border: 1px solid rgba(0, 255, 204, 0.18);
     backdrop-filter: blur(15px);
-    box-shadow: 0 0 60px rgba(0, 255, 204, 0.05);
+    box-shadow: 0 10px 80px rgba(0, 255, 204, 0.08);
     overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
+    /* 가속 시 픽셀 어긋남 방지 */
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
 /* 배경 투명화를 위해 백그라운드 색상이나 빛 효과를 로고 이미지 위에 덮어씌우는 방식으로 수정 */
