@@ -1917,3 +1917,83 @@ body {
 .bridge-copy-btn:hover {
     background: #57ecff;
 }
+
+/* Rebuilding Additions: V3 */
+button.read-link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #ff8c00;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+    display: inline-block;
+    transition: color 0.2s;
+}
+button.read-link:hover {
+    color: #ffa500;
+}
+
+.sim-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: #ccc;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.sim-btn:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+}
+.sim-btn.active {
+    background: var(--accent-orange);
+    border-color: var(--accent-orange);
+    color: #000;
+    box-shadow: 0 0 10px rgba(247, 147, 26, 0.4);
+}
+
+.main-quick-btn {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 6px 14px;
+    color: #aaa;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.main-quick-btn:hover {
+    background: rgba(247, 147, 26, 0.1);
+    border-color: rgba(247, 147, 26, 0.3);
+    color: var(--accent-orange);
+    box-shadow: 0 0 10px rgba(247, 147, 26, 0.2);
+}
+
+@keyframes pumpFlash {
+    0% { background-color: rgba(247, 149, 29, 0.25); }
+    100% { background-color: transparent; }
+}
+@keyframes warningFlash {
+    0% { background-color: rgba(13, 204, 242, 0.25); }
+    100% { background-color: transparent; }
+}
+.pump-active-overlay {
+    animation: pumpFlash 2s ease-out forwards;
+}
+.warning-active-overlay {
+    animation: warningFlash 2s ease-out forwards;
+}
+
+@media (max-width: 768px) {
+    .simulator-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+}
