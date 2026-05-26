@@ -200,38 +200,51 @@
                 </div>
             </div>
 
-            <!-- Hot News Section -->
-            <div class="news-ticker-area">
-                <h4 class="news-ticker-title">🔥 실시간 핵심지표 TOP3</h4>
-                <div class="news-grid-responsive" style="overflow-x: auto; border-radius: 12px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05);">
-                    <div class="news-grid" id="news-grid" style="min-width: 900px;">
-                        <!-- JS에서 동적으로 생성됩니다 -->
+            <!-- Real-time Core Dashboard Section (No Scroll, Intuitive) -->
+            <div class="realtime-dashboard-section">
+                <!-- [메인 헤더]: 실시간 비트코인 시세 (LIVE PRICE) -->
+                <div class="live-price-hero">
+                    <span class="stat-label" style="color: var(--accent-orange); letter-spacing: 3px;">✨ BITCOIN REAL-TIME LIVE PRICE</span>
+                    <div style="font-size: 56px; font-weight: 900; line-height: 1.2; margin: 15px 0 10px; display: inline-block;">
+                        <span id="live-btc-price">연결중...</span>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <span id="dma-status" class="tag-strategy" style="font-size: 13px; font-weight: 700; padding: 4px 14px; border-radius: 30px; display: inline-block; box-shadow: 0 0 15px rgba(247,147,26,0.15); transition: all 0.3s ease;">추세 분석중...</span>
                     </div>
                 </div>
-            </div>
 
-            <div class="market-stats">
-                <div class="stat-box" id="live-price-box">
-                    <span class="stat-label">LIVE PRICE & 200 DMA</span>
-                    <div class="price-group-container">
-                        <span class="stat-value" id="live-btc-price">연결중...</span>
-                        <span id="dma-status" class="tag-strategy" style="font-size: 11px; margin-top: 5px; padding: 2px 8px; border-radius: 4px; display: inline-block;">추세 분석중...</span>
-                        <div id="price-sparkline-container" class="sparkline-wrapper" style="height: 120px; margin-top: 20px;">
-                            <canvas id="price-sparkline"></canvas>
+                <!-- [하단 3분할 대시보드]: 정교한 크리스탈 스타일 카드 3장 배치 -->
+                <div class="dashboard-grid">
+                    <!-- 카드 1 (해시레이트): ⚡ 실시간 해시파워 및 네트워크 안정성 지수 -->
+                    <div class="crystal-card hashrate-card">
+                        <span class="stat-label" style="font-size: 12px; color: var(--accent-cyan); letter-spacing: 2px; margin-bottom: 5px;">⚡ HASHRATE</span>
+                        <div style="font-size: 26px; font-weight: 900; color: var(--accent-cyan); text-shadow: 0 0 15px rgba(0, 243, 255, 0.4); margin: 8px 0;" id="btc-hashrate">648.5 EH/s</div>
+                        <div>
+                            <span id="hashrate-status" class="tag-insight" style="font-size: 11px; padding: 2px 8px; border-radius: 4px; display: inline-block; color: var(--accent-cyan); background: rgba(0, 243, 255, 0.1); font-weight: 700;">보안성 극대화 (ATH)</span>
+                        </div>
+                        <p class="stat-desc" style="font-size: 11px; color: #aaa; margin-top: 12px; line-height: 1.5; word-break: keep-all;">실시간 해시파워 및 네트워크 안정성 지수</p>
+                    </div>
+
+                    <!-- 카드 2 (거래량 지표): 📊 글로벌 거래량 시그널 및 매수 강도 -->
+                    <div class="crystal-card volume-card">
+                        <span class="stat-label" style="font-size: 12px; color: var(--accent-orange); letter-spacing: 2px; margin-bottom: 5px;">📊 DAILY VOLUME</span>
+                        <div style="font-size: 26px; font-weight: 900; color: #ff8c00; text-shadow: 0 0 15px rgba(255, 140, 0, 0.4); margin: 8px 0;" id="btc-volume">3,450 BTC</div>
+                        <div>
+                            <span id="volume-status" class="tag-network" style="font-size: 11px; padding: 2px 8px; border-radius: 4px; display: inline-block; color: var(--accent-orange); background: rgba(255, 147, 26, 0.1); font-weight: 700;">거래 유동성 강세</span>
+                        </div>
+                        <p class="stat-desc" style="font-size: 11px; color: #aaa; margin-top: 12px; line-height: 1.5; word-break: keep-all;">글로벌 거래량 시그널 및 매수 강도</p>
+                    </div>
+
+                    <!-- 카드 3 (200일 이평선 및 차트): 📈 장기 가격 지지선 대비 이격률 통찰 -->
+                    <div class="crystal-card dma-card">
+                        <div>
+                            <span class="stat-label" style="font-size: 12px; color: #fff; letter-spacing: 2px; margin-bottom: 5px;">📈 200 DMA TREND</span>
+                            <p class="stat-desc" style="font-size: 11px; color: #aaa; margin: 5px 0 0; line-height: 1.5; word-break: keep-all;">장기 가격 지지선 대비 이격률 통찰</p>
+                        </div>
+                        <div id="price-sparkline-container" class="sparkline-wrapper" style="height: 60px; margin-top: 10px; display: flex; align-items: center; justify-content: center; width: 100%;">
+                            <canvas id="price-sparkline" style="max-height: 55px; width: 100%;"></canvas>
                         </div>
                     </div>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">GLOBAL HASHRATE</span>
-                    <span class="stat-value cyan" id="btc-hashrate">648.5 EH/s</span>
-                    <span id="hashrate-status" class="tag-insight" style="font-size: 11px; margin-top: 5px; padding: 2px 8px; border-radius: 4px; display: inline-block; color: var(--accent-cyan); background: rgba(0, 243, 255, 0.1);">보안성 극대화 (ATH)</span>
-                    <p class="stat-desc" style="margin-top: 15px;">전체 비트코인 네트워크의 컴퓨팅 연산력(보안 강도) 지표입니다.</p>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">DAILY VOLUME (24H)</span>
-                    <span class="stat-value orange" id="btc-volume">3,450 BTC</span>
-                    <span id="volume-status" class="tag-network" style="font-size: 11px; margin-top: 5px; padding: 2px 8px; border-radius: 4px; display: inline-block; color: var(--accent-orange); background: rgba(255, 147, 26, 0.1);">거래 유동성 강세</span>
-                    <p class="stat-desc" style="margin-top: 15px;">글로벌 주요 거래소 및 업비트 거래 유동성 강도 지표입니다.</p>
                 </div>
             </div>
 

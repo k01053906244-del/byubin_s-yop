@@ -2598,3 +2598,95 @@ button.read-link:hover {
         font-size: 42px;
     }
 }
+
+/* ===================================================================
+   Real-time Core Dashboard Styles
+   =================================================================== */
+.realtime-dashboard-section {
+    margin: 30px auto 40px;
+    max-width: 1000px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.live-price-hero {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 24px;
+    padding: 40px 20px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 30px rgba(247,147,26,0.1);
+    margin-bottom: 25px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+}
+
+.live-price-hero:hover {
+    border-color: rgba(247, 147, 26, 0.3) !important;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 40px rgba(247,147,26,0.2);
+    transform: translateY(-2px);
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.crystal-card {
+    background: rgba(255, 255, 255, 0.02) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 25px 20px;
+    text-align: center;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 180px;
+    box-sizing: border-box;
+}
+
+.crystal-card.hashrate-card {
+    border-color: rgba(0, 243, 255, 0.15);
+}
+.crystal-card.volume-card {
+    border-color: rgba(255, 147, 26, 0.15);
+}
+.crystal-card.dma-card {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.crystal-card:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+}
+
+.crystal-card.hashrate-card:hover {
+    border-color: rgba(0, 243, 255, 0.4);
+    box-shadow: 0 12px 40px rgba(0, 243, 255, 0.15);
+}
+.crystal-card.volume-card:hover {
+    border-color: rgba(255, 147, 26, 0.4);
+    box-shadow: 0 12px 40px rgba(255, 147, 26, 0.15);
+}
+.crystal-card.dma-card:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 12px 40px rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .live-price-hero {
+        padding: 30px 15px;
+    }
+}
