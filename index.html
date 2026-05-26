@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>비트코인이다~얍! V1</title>
+    <title>뷰빈 비트코인이다~얍!</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
     <!-- PWA Manifest for "Add to Home Screen" -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0d0d0d">
-    <link rel="apple-touch-icon" href="btc-logo.png">
+    <link rel="apple-touch-icon" href="new-btc-logo.png">
 </head>
 
 <body>
@@ -171,7 +171,7 @@
         <section class="hero-section" style="padding-top: 20px;">
             <!-- 1안: 아코디언 접이식 서랍 컨테이너 -->
             <div class="drawer-toggle-container" style="margin: 20px auto 30px; max-width: 800px; padding: 0 10px;">
-                <button id="aggro-drawer-toggle" class="drawer-toggle-btn" style="width: 100%; padding: 15px; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); font-size: 15px; font-weight: 700; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.3); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; outline: none;">
+                <button id="aggro-drawer-toggle" class="drawer-toggle-btn" style="width: 100%; padding: 18px 20px; border-radius: 18px; border: none; font-size: 18px; font-weight: 800; color: #00f0ff; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; outline: none; letter-spacing: 0.5px;">
                     🔮 AI '어그로 버튼' 통찰 대시보드 <span id="drawer-arrow" style="transition: transform 0.3s ease; display: inline-block;">▼ 펼치기</span>
                 </button>
             </div>
@@ -203,8 +203,10 @@
             <!-- Hot News Section -->
             <div class="news-ticker-area">
                 <h4 class="news-ticker-title">🔥 실시간 핵심지표 TOP3</h4>
-                <div class="news-grid" id="news-grid">
-                    <!-- JS에서 동적으로 생성됩니다 -->
+                <div class="news-grid-responsive" style="overflow-x: auto; border-radius: 12px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05);">
+                    <div class="news-grid" id="news-grid" style="min-width: 900px;">
+                        <!-- JS에서 동적으로 생성됩니다 -->
+                    </div>
                 </div>
             </div>
 

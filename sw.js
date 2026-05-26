@@ -1,11 +1,11 @@
-const CACHE_NAME = 'bit-ida-yap-v6';
+const CACHE_NAME = 'bit-ida-yap-v7';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './main.js',
   './manifest.json',
-  './btc-logo.png'
+  './new-btc-logo.png'
 ];
 
 self.addEventListener('install', (e) => {

@@ -1701,6 +1701,33 @@ function updateGoalProgress(currentBtc) {
     }
 }
 
+// 실시간 핵심지표 그리드 네이티브 스크롤 도우미 (반감기 테이블과 100% 동일한 네이티브 가로스크롤 제공)
+function initNewsNativeScrollHelper() {
+    const container = document.querySelector('.news-grid-responsive');
+    if (!container) return;
+
+    let startScrollLeft = 0;
+    const dragThreshold = 8; // 드래그 판정 임계치 (8px 이상 스크롤되면 드래그로 판정해 클릭 차단)
+
+    // 마우스 및 터치 시작 시점의 스크롤 위치를 안전하게 기록
+    container.addEventListener('touchstart', () => {
+        startScrollLeft = container.scrollLeft;
+    }, { passive: true });
+
+    container.addEventListener('mousedown', () => {
+        startScrollLeft = container.scrollLeft;
+    });
+
+    // 캡처링 단계에서 클릭 인터셉트: 드래그/스와이프 스크롤이 발생한 경우 디테일 모달 강제 팝업 방지
+    container.addEventListener('click', (e) => {
+        const diff = Math.abs(container.scrollLeft - startScrollLeft);
+        if (diff > dragThreshold) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    }, true); // capturing: true로 자식 뉴스카드의 클릭 이벤트가 작동하기 전에 선제적으로 가로채서 제거
+}
+
 
 // -----------------------------------------
 // 페이지 로딩 완료 시 실행 컨텍스트
@@ -1732,6 +1759,7 @@ function initApp() {
     fetchRealtimeNews();
     renderWhyBtc();
     initLadder();
+    initNewsNativeScrollHelper();
 
     const logoText = document.querySelector('.logo-text');
     if (logoText) {
@@ -1790,7 +1818,7 @@ function initApp() {
     const savedBtc = localStorage.getItem('ladder_total_btc');
     if (savedBtc) updateGoalProgress(parseFloat(savedBtc));
 
-    // 로고 클릭 팡파레 & 폭죽 (Confetti 라이브러리 로드 실패 시에도 소리는 정상 출력되도록 설계)
+    // 비트코인 영상 클릭 핸들러 (의미없는 최초 꽃가루 제거 및 실시간 시세 연동)
     const btcBadge = document.querySelector('.btc-badge');
     if (btcBadge) {
         btcBadge.style.cursor = 'pointer';
@@ -1807,20 +1835,23 @@ function initApp() {
             }
 
             if (isRise) {
+                // 상승 시: 화려한 불꽃(레드 폭죽)과 축하음(적립금 매수실현시의 팡파레음) 재생
                 playPumpSound();
                 triggerPriceFlash('pump');
             } else if (isFall) {
+                // 하락 시: 경고음 및 파란색 하락 샤워 효과 재생
                 playWarningSound();
                 triggerPriceFlash('warning');
             } else {
-                playVictorySound();
-                if (typeof confetti === 'function') {
-                    confetti({
-                        particleCount: 150,
-                        spread: 100,
-                        origin: { y: 0.6 },
-                        colors: ['#FFD700', '#FFA500', '#0dccf2', '#FFFFFF']
-                    });
+                // 최초 화면을 터치할 때나 시세 변동이 없는 평소 상태(EVEN)에는 꽃가루나 효과음을 내지 않고 조용히 재생되도록 처리!
+                // 브라우저의 오디오 재생 잠금을 풀기 위해 AudioContext만 활성화함
+                try {
+                    const audioCtx = getAudioContext();
+                    if (audioCtx && audioCtx.state === 'suspended') {
+                        audioCtx.resume();
+                    }
+                } catch (e) {
+                    console.warn('AudioContext resume failed:', e);
                 }
             }
         });

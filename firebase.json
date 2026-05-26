@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "byubin-btc-yap",
     "public": ".",
     "ignore": [
       "firebase.json",
